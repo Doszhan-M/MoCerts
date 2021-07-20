@@ -1,0 +1,15 @@
+<form class="login" method="POST" action="{% url 'account_login' %}">
+    {% csrf_token %}
+    <p>Имя пользователя</p>
+    <p style="margin-top: -3%; text-align: center;">{{ form.login }}</p>
+    <p>Пароль</p>
+    <p style="margin-top: -3%; text-align: center;">{{ form.password }}</p>
+    <p style="font-size: small;">Запомнить {{ form.remember }}</p>
+
+    {% if redirect_field_value %}
+    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+    {% endif %}
+    <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
+    <br><br>
+    <button class="btn btn-primary" type="submit" style="margin-top: 5%;"><a href="{{ signup_url }}">Регистрация</a></button>
+</form>

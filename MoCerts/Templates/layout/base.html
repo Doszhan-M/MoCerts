@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+{% load static %}
+{% load thumbnail %}
+
+<html lang="en">
+<head prefix="og: https://ogp.me/ns#">
+    {% block head %}
+    {% endblock %}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <title>{% block title %}Mocerts{% endblock %}</title>
+    <link href="https://allfont.ru/allfont.css?fonts=mon-amour-two-medium" rel="stylesheet" type="text/css"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:ital,wght@1,300&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:ital,wght@1,300&amp;display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style1.css' %}">
+    <link rel="stylesheet" href="{% static 'css/fonts.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style2.css' %}">
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="apple-touch-icon" sizes="76x76" href="{% static 'img/apple-touch-icon.png' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicon-32x32.png' %}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicon-16x16.png' %}">
+    <link rel="manifest" href="{% static 'img/site.webmanifest' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cookie&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@900&display=swap" rel="stylesheet">
+    <meta name="msapplication-TileColor" content="#da532c">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<body class="common">
+{% load i18n %}
+{% get_current_language as LANGUAGE_CODE %}
+{% load socialaccount %}
+
+
+<!-- Registration -->
+<div class="modal fade" id="registration" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="#" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <img class="profile-photo_img" src="/static/img/register_bg.jpg" alt="" width="100%">
+                    <div align="center" style="position: absolute; top: 15%; left: 35%;">
+                        <h3>{% trans 'Registration' %}</h3>
+                    </div>
+                    <div class="profile-data-register">
+                        <div class="d-flex flex-wrap mt-2" style="position: absolute; top: 20%; left: 10%;">
+                            <div class="profile-photo" style="position: relative; top: 20%; left: 10%;">
+                                <label for="image">
+                                    <input type="file" class="form-control" name="photo"
+                                           accept="image/*" id="image" style="display:none;"/>
+                                    <img class="profile-photo_img" src="/media/profile.jpg" alt="" width="60%">
+                                </label>
+                            </div>
+                        </div>
+                        <div style="position: absolute; top: 45%; left: 30%;">
+                            <p>
+                                <input type="text" name="first_name" maxlength="30" required="" id="id_first_name"
+                                       placeholder="{% trans 'Имя' %}" style="width:100%;">
+                            </p>
+                            <p>
+                                <input type="text" name="last_name" maxlength="30" required="" id="id_last_name"
+                                       placeholder="{% trans 'Фамилия' %}" style="width:100%;">
+                            </p>
+                            <p>
+                                <input type="email" name="email" maxlength="120" autofocus="" required="" id="id_email"
+                                       placeholder="Email">
+                            </p>
+                            <p>
+                                <input type="password" name="password1" autocomplete="new-password" required=""
+                                       id="id_password1" placeholder="Password">
+                            </p>
+                            <p>
+                                <input type="password" name="password2" autocomplete="new-password" required=""
+                                       id="id_password2" placeholder="repeat password">
+                            </p>
+                        </div>
+                        <div style="position: absolute; top: 80%; left:10%; width:100%">
+                            <div class="main__nav--item" style="width: 30%;">
+                                <button type="submit" class="btn"
+                                        style="position: relative;top: -10px; color: #dba95e;">
+                                    {% trans 'Register' %}
+                                </button>
+
+                            </div>
+                            <div class="main__nav--item"
+                                 style="position: absolute; left:50%; top: 0%;width: 30%; max-height:100%">
+                                <a class="btn" href="" data-bs-toggle="modal" data-bs-dismiss="modal"
+                                   style="position: relative;top: -10px; color: #dba95e;" data-bs-target="#login">
+                                    {% trans 'Login' %}
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Login -->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form action="{% url 'account_login' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <img class="profile-photo_img" src="/static/img/register_bg.jpg" alt="" width="100%">
+                    <div align="center" style="position: absolute; top: 15%; left: 44%;">
+                        <h3>{% trans 'Войти' %}</h3>
+                    </div>
+                    <div class="profile-data-register">
+                        <div class="d-flex flex-wrap mt-2" style="position: absolute; top: 20%; left: 10%;">
+                            <div class="profile-photo" style="position: relative; top: 20%; left: 10%;">
+                                <img class="profile-photo_img" src="/media/profile.jpg" alt="" width="60%">
+                            </div>
+                        </div>
+                        <div style="position: absolute; top: 45%; left: 30%;">
+                            <p>
+                                <a href="{{ form.login }}facebook">
+                                    {% trans 'Login from Facebook' %}
+                                </a>
+                            </p>
+                            <p>
+                                <a href="/accounts/google/login/?process=login">{% trans 'Login from Google' %}</a>
+                            </p>
+                            <p>
+                                {{ form.login }}
+                            </p>
+                            <p>
+                                {{ form.password }}
+                            </p>
+                        </div>
+
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+
+                        <div style="position: absolute; top: 80%; left:10%; width:100%">
+                            <div class="main__nav--item" style="width: 30%;">
+                                <a class="btn" href="" data-bs-toggle="modal" data-bs-dismiss="modal"
+                                   style="position: relative;top: -10px; color: #dba95e; text-decoration: none;"
+                                   data-bs-target="#registration">
+                                    {% trans 'Registration' %}
+                                </a>
+                            </div>
+                            <div class="main__nav--item"
+                                 style="position: absolute; left:50%; top: 0%;width: 30%; max-height:100%">
+                                <button type="submit" class="btn"
+                                        style="position: relative;top: -10px; color: #dba95e;">
+                                    {% trans "Sign In" %}
+                                </button>
+
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="nav__mobile">
+    <i class="fa fa-times close__nav" aria-hidden="true"></i>
+    <ul class="nav__mobile--ul">
+        <li class="nav__ul--item">
+            <a href="{% url 'main_page' %}" style="text-decoration: none;">{% trans 'Home' %}</a>
+        </li>
+        <li class="nav__ul--item">
+            <a href="select_certificate" style="text-decoration: none;">{% trans 'Create Certificate' %}</a>
+        </li>
+        <li class="nav__ul--item">
+            <a href="my_certificates" style="text-decoration: none;">{% trans 'My Certificates' %}</a>
+        </li>
+        <li class="nav__ul--item">
+            <a href="manual" style="text-decoration: none;">{% trans 'Instruction' %}</a>
+        </li>
+        <li class="nav__ul--item registration">
+            <a href="#" style="text-decoration: none;">{% trans 'Registration' %}</a>
+        </li>
+    </ul>
+
+    <div class="dropdown dropdown__menu--mobile">
+        <div class="select">
+            <img style="margin-left: 10px;" src="{% static 'img/GBR.png' %}" alt="GBR">
+            <span>
+                EN
+            </span>
+            <i class="fa fa-chevron-up open__dropdown"></i>
+        </div>
+        <input type="hidden" name="language">
+
+        <ul class="dropdown-menu">
+            <li id="RU">
+                <img src="{% static 'img/RUS.png' %}" alt="RUS">
+                <a href="/ru/">RU</a>
+            </li>
+            <li id="EN">
+                <img src="{% static 'img/GBR.png' %}" alt="GBR">
+                <a href="/en/">EN</a>
+            </li>
+            <li id="DE">
+                <img src="{% static 'img/DEU.png' %}" alt="DEU">
+                <a href="/de/">DE</a>
+            </li>
+            <li id="ES">
+                <img src="{% static 'img/ESP.png' %}" alt="ESP">
+                <a href="/es/">ES</a>
+            </li>
+            <li id="FR">
+                <img src="{% static 'img/FRA.png' %}" alt="FRA">
+                <a href="/fr/">FR</a>
+            </li>
+            <li id="IT">
+                <img src="{% static 'img/ITA.png' %}" alt="ITA">
+                <a href="/it/">IT</a>
+            </li>
+            <li id="PT">
+                <img src="{% static 'img/PRT.png' %}" alt="PRT">
+                <a href="/pt/">PT</a>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<!--<header class="header">-->
+<!--    <div class="header-wrap-bg">-->
+<!--        <div class="container">-->
+<!--            <div class="header-wrap">-->
+<!--                <div class="logo">-->
+<!--                    <img src="{% static 'img/logo.png' %}" alt="logo">-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</header>-->
+
+<header class="header" id="header">
+    <img class="header__img" style="position: absolute; left: 0; top: 0; z-index: -1; width: 100%; height: 133px;"
+         src="{% static 'img/header-long.webp' %}" alt="">
+    <img src="{% static 'img/koners.webp' %}" class="header__left--koners koners" alt="Koners">
+
+    <div class="header__container">
+        <div class="logo">
+            <img src="{% static 'img/logo.webp' %}" alt="Logotype">
+        </div>
+        <div class="header__mobile--nav">
+            <span></span>
+        </div>
+        {% if user.is_authenticated %}
+        <a href="#" style="text-decoration: none;">
+            <span class="header__reg">{{ user.first_name }} {{ user.last_name }}</span>
+        </a>
+        <div class="header__avatar">
+            <a href="#"><img src="{% static 'img/avatar.webp' %}" alt="Avatar"></a>
+        </div>
+        <a href="#" style="text-decoration: none;">
+            <span class="header__sum">
+            {{ user.balance }}$
+            </span>
+        </a>
+        {% else %}
+        <a data-bs-toggle="modal" data-bs-target="#registration">
+            <span class="header__reg">{% trans 'Registration' %}</span>
+        </a>
+
+        <div class="header__avatar">
+            <img src="{% static 'img/avatar.webp' %}" alt="Avatar">
+        </div>
+        <a data-bs-toggle="modal" data-bs-target="#login">
+            <span class="header__reg">{% trans 'Login' %}</span>
+        </a>
+        {% endif %}
+        <div class="dropdown">
+            <div class="select">
+                {% if LANGUAGE_CODE == 'ru' %}
+                <img style="margin-left: 10px;" src="{% static 'img/RUS.png' %}" alt="RUS">
+                <span>
+                    RU
+                </span>
+                <i class="fa fa-chevron-up"></i>
+                {% endif %}
+                {% if LANGUAGE_CODE == 'en' %}
+                <img style="margin-left: 10px;" src="{% static 'img/GBR.png' %}" alt="GBR">
+                <span>
+                    EN
+                </span>
+                <i class="fa fa-chevron-up"></i>
+                {% endif %}
+                {% if LANGUAGE_CODE == 'de' %}
+                <img style="margin-left: 10px;" src="{% static 'img/DEU.png' %}" alt="DEU">
+                <span>
+                    DE
+                </span>
+                <i class="fa fa-chevron-up"></i>
+                {% endif %}
+                {% if LANGUAGE_CODE == 'fr' %}
+                <img style="margin-left: 10px;" src="{% static 'img/FRA.png' %}" alt="FRA">
+                <span>
+                    FR
+                </span>
+                <i class="fa fa-chevron-up"></i>
+                {% endif %}
+                {% if LANGUAGE_CODE == 'es' %}
+                <img style="margin-left: 10px;" src="{% static 'img/ESP.png' %}" alt="ESP">
+                <span>
+                    ES
+                </span>
+                <i class="fa fa-chevron-up"></i>
+                {% endif %}
+                {% if LANGUAGE_CODE == 'it' %}
+                <img style="margin-left: 10px;" src="{% static 'img/ITA.png' %}" alt="ITA">
+                <span>
+                    IT
+                </span>
+                <i class="fa fa-chevron-up"></i>
+                {% endif %}
+                {% if LANGUAGE_CODE == 'pt' %}
+                <img style="margin-left: 10px;" src="{% static 'img/PRT.png' %}" alt="PRT">
+                <span>
+                    PT
+                </span>
+                <i class="fa fa-chevron-up"></i>
+                {% endif %}
+            </div>
+            <ul class="dropdown-menu">
+                <li id="RU">
+                    <img src="{% static 'img/RUS.png' %}" alt="RUS">
+                    <a href="/ru/">RU</a>
+                </li>
+                <li id="EN">
+                    <img src="{% static 'img/GBR.png' %}" alt="GBR">
+                    <a href="/en/">EN</a>
+                </li>
+                <li id="DE">
+                    <img src="{% static 'img/DEU.png' %}" alt="DEU">
+                    <a href="/de/">DE</a>
+                </li>
+                <li id="ES">
+                    <img src="{% static 'img/ESP.png' %}" alt="ESP">
+                    <a href="/es/">ES</a>
+                </li>
+                <li id="FR">
+                    <img src="{% static 'img/FRA.png' %}" alt="FRA">
+                    <a href="/fr/">FR</a>
+                </li>
+                <li id="IT">
+                    <img src="{% static 'img/ITA.png' %}" alt="ITA">
+                    <a href="/it/">IT</a>
+                </li>
+                <li id="PT">
+                    <img src="{% static 'img/PRT.png' %}" alt="PRT">
+
+                    <a href="/pt/">PT</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <img src="{% static 'img/koners_right.webp' %}" class="header__right--koners koners" alt="Koners">
+</header>
+
+
+<section class="nav" id="nav">
+    <nav class="main__nav">
+        <ul class="main__nav--ul">
+            <li class="main__nav--item">
+                <a href="{% url 'main_page' %}" style="text-decoration: none;">{% trans 'Home' %}</a>
+            </li>
+            <li class="main__nav--item">
+                <a href="select_certificat" style="text-decoration: none;">
+                    {% trans 'Create Certificate' %}
+                </a>
+            </li>
+            <li class="main__nav--item">
+                <a href="my_certificates" style="text-decoration: none;">{% trans 'My Certificates' %}</a>
+            </li>
+            <li class="main__nav--item">
+                <a href="manual" style="text-decoration: none;">{% trans 'Instruction' %}</a>
+            </li>
+        </ul>
+    </nav>
+</section>
+<div class="container">
+    <div class="row">
+        {% for i in messages %}
+        {% if i.tags == 'error' %}
+        <div class="col">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{i}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {% else %}
+        <div class="col">
+            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                {{i}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+
+{% block content %}
+{% endblock content%}
+
+
+<footer class="footer" id="footer">
+    <div class="footer__container">
+        <section class="footer__contact">
+            <p style="line-height: 0.7;">АО MoCersts ®</p>
+            <p style="line-height: 0.7;">{% trans 'г. Новосибирск, 630007' %}</p>
+            <p style="line-height: 0.7;">{% trans 'Железнодорожный район,' %}</p>
+            <p style="margin-bottom: 9px; line-height: 0.7;"><u>{% trans '​Советская, 5​1' %}</u>{% trans ' офис 506' %}
+            </p>
+        </section>
+        <section class="footer__number">
+            <img src="{% static 'img/number_poster.png' %}" alt="Poster" class="footer__number--img">
+            <span>+780085050505</span>
+        </section>
+        <section class="footer__social">
+            <div class="footer__social--icons">
+                <a href="https://t.me/mocerts"><img src="{% static 'img/crown.webp' %}" alt="Crown"></a>
+                <a href="https://t.me/cashriser"><img src="{% static 'img/mc.webp' %}" alt="mc"></a>
+                <a href="https://t.me/mocertsbot"><img src="{% static 'img/bot.webp' %}" alt="Bot"></a>
+                <a href="https://instagram.com/mocerts"><img src="{% static 'img/insta.webp' %}" alt="Instagram"></a>
+                <a href="https://facebook.com/mocerts"><img src="{% static 'img/fb.webp' %}" alt="Facebook"></a>
+            </div>
+            <p>{% trans '© 2021 СЧАСТЬЕ ЕСТЬ. и оно уже БЛИЗКО!!! MoCerts.com' %}</p>
+        </section>
+        <section class="footer__contact">
+            <p style="line-height: 0.7;">Certificate of Financial state</p>
+            <p style="line-height: 0.7;">№1604-21</p>
+            <p style="line-height: 0.7;">from 15.05.2021 y.</p>
+            <p class="edit__text" style="line-height: 0.7;">admin@mocerts.com &nbsp;</p>
+        </section>
+    </div>
+    <p class="footer__happy">{% trans '© 2021 СЧАСТЬЕ ЕСТЬ. и оно уже БЛИЗКО!!! MoCerts.com' %}</p>
+</footer>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
+<script src="{% static 'js/main.js' %}" defer></script>
+<script src="/static/js/bootstrap.bundle.min.js"
+        integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
+        crossorigin="anonymous"></script>
+{% block script %}
+{% endblock %}
+</body>
+<script>
+        window.addEventListener('load', init, false);
+        function init(e) {
+            let profile_photo = document.getElementsByClassName('profile-photo');
+            if (profile_photo) {
+                profile_photo[0].addEventListener('click', addPhoto, false);
+            }
+            let input_photo  = document.getElementById('id_profile_photo');
+            input_photo.addEventListener('change', changePhoto, false);
+        }
+        function  addPhoto(e) {
+            let input_photo  = document.getElementById('id_profile_photo');
+            input_photo.click();
+        }
+        function changePhoto(e) {
+            let input_photo  = document.getElementById('id_profile_photo');
+            let profile_photo_img = document.getElementsByClassName('profile-photo_img')[0]
+            let reader = new FileReader();
+
+            reader.onload = function (e) {
+                profile_photo_img.src = e.target.result;
+            };
+            reader.readAsDataURL(input_photo.files[0]);
+        }
+
+
+
+</script>
+</html>

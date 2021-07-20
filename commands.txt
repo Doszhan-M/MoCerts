@@ -10,3 +10,5 @@ python3 manage.py runserver
 
 
 sudo fuser -k 8000/tcp
+admin@mail.ru
+acer1234
