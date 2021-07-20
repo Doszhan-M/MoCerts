@@ -1,0 +1,12 @@
+pip freeze
+pip install --upgrade pip
+
+python3 manage.py createsuperuser
+
+
+python3 manage.py makemigrations
+python3 manage.py migrate
+python3 manage.py runserver
+
+
+sudo fuser -k 8000/tcp
