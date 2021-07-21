@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% extends "account/base.html" %}
+{% load i18n %}
+
+{% block title %}
+{{ block.super }} : Выйти
+{% endblock title%}
+
+{% block content %}
+<div class="main">
+    <div class="profile-data-register">
+        <div style="position: absolute; top: 40%; left: 33%;">
+            <div class="register">
+                <h3>{% trans 'Are you sure you want to sign out?' %}</h3>
+
+                <form method="post" action="{% url 'account_logout' %}">
+                    {% csrf_token %}
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+                    <button style="position: relative;top: 10px;left:30%;" class="btn btn-danger" type="submit">{% trans 'Sign Out' %}</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+{%endblock content%}

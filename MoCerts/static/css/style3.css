@@ -1,0 +1,16 @@
+.main {
+    min-height: calc(100vh - 118px);
+}
+
+.register {
+    color: #32415b;
+    font-family: Georgia, sans-serif;
+    color: #dba95e;
+    font-weight: bold;
+}
+
+.register_alert {
+    color: red;
+    font-family: Georgia, sans-serif;
+    /* font-weight: bold; */
+}

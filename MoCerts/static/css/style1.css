@@ -10,6 +10,9 @@ body {
     font-weight: 400;
     src: url('../fonts/mon.ttf') format('truetype');
   }
+
+
+
 .container {
     width: 1200px;
     margin: 0 auto;
@@ -492,6 +495,7 @@ ul,li {
     padding: 0 0 10px 0;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     background: white;
+
 }
 .footer-wrap {
     width: 1000px;

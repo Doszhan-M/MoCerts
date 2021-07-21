@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+{% extends "account/base.html" %}
+{% load i18n %}
+
+{% block title %}
+{{ block.super }} : Регистрация
+{% endblock title%}
+
+{% block content %}
+<div class="main">
+  <div class="profile-data-register">
+    <div style="position: absolute; top: 30%; left: 40%;">
+      <div class="register">
+        <h1>{% trans "Sign Up" %}</h1><br>
+        <p style="color: #5f5b56;">
+          {% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
+        </p>
+      </div>
+      <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+        {% if form.errors %}
+        {% for field in form %}
+        {% for error in field.errors %}
+        <div class="register_alert">
+          <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+        <div class="register_alert">
+          <strong>{{ error|escape }}</strong>
+        </div>
+        {% endfor %}
+        {% endif %}
+        <p>{{ form.first_name }}</p>
+        <p>{{ form.last_name }}</p>
+        <p>{{ form.email }}</p>
+        <p>{{ form.password1 }}</p>
+        <p>{{ form.password2 }}</p>
+        <br>
+        {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+        {% endif %}
+        <div class="main__nav--item" style="width: 40%;">
+          <button style="position: relative;top: -10px; color: #dba95e;" class="btn" type="submit">
+            {% trans "Sign Up" %}
+          </button>
+
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{%endblock content%}

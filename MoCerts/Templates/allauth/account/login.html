@@ -1,0 +1,57 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+
+{% block title %}
+{{ block.super }} : Вход на сайт
+{% endblock title%}
+
+{% block content %}
+<div class="main">
+    <div class="profile-data-register">
+        <div style="position: absolute; top: 40%; left: 33%;">
+            <div class="register">
+                <h3>Пожалуйста, авторизуйтесь</h3><br>
+
+                <form class="login" method="POST" action="{% url 'account_login' %}">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="register_alert">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="register_alert">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+
+                    <p>{{ form.login }}</p>
+                    <p>{{ form.password }}</p>
+                    <br>
+                    {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                    {% endif %}
+
+                    <div class="main__nav--item" style="width: 40%;">
+                        <button style="position: relative;top: -10px; color: #dba95e;" class="btn" type="submit">
+                            {%trans "Sign In" %}
+                        </button>
+                    </div><br><br>
+
+                    <a class="button secondaryAction" href="{% url 'account_reset_password' %}">
+                        {% trans "Forgot Password?" %}
+                    </a>
+                    <hr>
+                </form>
+                <p><a href="{{ signup_url }}">Регистрация</a></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

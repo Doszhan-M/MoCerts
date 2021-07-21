@@ -41,12 +41,13 @@ INSTALLED_APPS = [
 
     'easy_thumbnails',
     'modeltranslation',
+
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     # 'allauth.socialaccount.providers.facebook',
-    'allauth.socialaccount.providers.instagram',
+    # 'allauth.socialaccount.providers.instagram',
 
 
     'MainApp',
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'MoCerts.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'users' / 'templates' / 'allauth', BASE_DIR / 'Templates', ],
+        'DIRS': [BASE_DIR / 'Templates', BASE_DIR / 'Templates' / 'allauth',],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -160,32 +161,33 @@ AUTHENTICATION_BACKENDS = [
 
 SITE_ID = 1
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    },
-    'facebook':
-        {
-            'SCOPE': ['email'],
-            'AUTH_PARAMS': {'auth_type': 'reauthenticate'},
-            'METHOD': 'oauth2',
-            'LOCALE_FUNC': lambda request: 'ru_RU'
-        }
-}
 
 AUTH_USER_MODEL = 'MainApp.CustomUser'
 ACCOUNT_ADAPTER = 'MainApp.adapter.MyAccountAdapter'
-
-HOST = 'http://127.0.0.1:8000'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'cinema.creating@gmail.com'
-EMAIL_USE_TLS = True
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_PORT = 587
-EMAIL_HOST_PASSWORD = 'qDePPCze8Jd!oxQb'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_UNIQUE_EMAIL = True
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+ACCOUNT_FORMS = {'signup': 'MainApp.forms.MySignupForm', 'login': 'MainApp.forms.MyLoginForm'}
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+try:
+    with open(os.path.join(BASE_DIR, 'secret/EMAIL_HOST.txt'), 'r') as token:
+        smtp = token.read()
+    EMAIL_HOST = smtp  # адрес сервера почты для всех один и тот же
+    EMAIL_PORT = 587  # порт smtp сервера тоже одинаковый
+    with open(os.path.join(BASE_DIR, 'secret/EMAIL_HOST_USER.txt'), 'r') as token:
+        email = token.read()
+    EMAIL_HOST_USER = email  # ваше имя пользователя
+    with open(os.path.join(BASE_DIR, 'secret/EMAIL_HOST_PASSWORD.txt'), 'r') as token:
+        password = token.read()
+    EMAIL_HOST_PASSWORD = password  # пароль от почты
+    EMAIL_USE_TLS = True
+    with open(os.path.join(BASE_DIR, 'secret/ADMINS.txt'), 'r') as token:
+        admins = token.read()
+    ADMINS = [('Dos', 'dos891@mail.ru'),]
+    SERVER_EMAIL = email
+    DEFAULT_FROM_EMAIL = email  # Используется для отправки email после регистрации
+    EMAIL_SUBJECT_PREFIX = '[FanBlog] '
+except FileNotFoundError:
+    print('Не найдены файлы настроек почтового сервера')
