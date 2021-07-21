@@ -11,7 +11,7 @@ class MyAccountAdapter(DefaultAccountAdapter):
         return path
 
     def get_logout_redirect_url(self, request):
-        path = reverse_lazy('profile')
+        path = reverse_lazy('main_page')
         return path
 
     def get_signup_redirect_url(self, request):
