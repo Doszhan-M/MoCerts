@@ -170,7 +170,10 @@ ACCOUNT_USERNAME_REQUIRED = False
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_FORMS = {'signup': 'MainApp.forms.MySignupForm', 'login': 'MainApp.forms.MyLoginForm'}
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# Настройки почтового сервера
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 try:
     with open(os.path.join(BASE_DIR, 'secret/EMAIL_HOST.txt'), 'r') as token:
         smtp = token.read()

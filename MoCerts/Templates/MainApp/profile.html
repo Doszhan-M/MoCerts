@@ -1,0 +1,52 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block head %}
+
+{% endblock %}
+
+{% block title %}
+Личный кабинет | Mocerts
+{% endblock %}
+{% block content %}
+<div class="main">
+    <div class="custom_wrap custom_font">
+        <h2 style="text-align: center;">Кабинет пользователя</h2><br>
+        <div class="profile_board">
+            <div class="profile_photo">
+                {% if user.photo %}
+                <img src="{{ user.photo.url }}" width="200">
+                {% else %}
+                <a href="#">Загрузите <br> фото</a>
+                {% endif %}
+            </div>
+            <div style="width: 70%;">
+                <div class="profile_data">
+                    <p class="td_left">{% trans "Имя" %}</p>
+                    <p class="td_right">{{user.first_name}}</p>
+                </div>
+                <div class="profile_data">
+                    <p class="td_left">{% trans "Фамилия" %}</p>
+                    <p class="td_right">{{user.last_name}}</p>
+                </div>
+                <div class="profile_data">
+                    <p class="td_left">{% trans "Почта" %}</p>
+                    <p class="td_right">{{user.email}}</p>
+                </div>
+                <div class="profile_data">
+                    <p class="td_left">{% trans "Баланс" %}</p>
+                    <p class="td_right">0$</p>
+                </div>
+            </div>
+        </div><br>
+        <div class="main__nav--item" style="width: 20%;">
+            <a style="position: relative;top: -10px; color: #dba95e;" class="btn" href="#">
+                Редактировать профиль
+            </a>
+        </div>
+    </div>
+
+</div>
+{% endblock content%}

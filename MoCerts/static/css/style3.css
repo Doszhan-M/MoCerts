@@ -2,10 +2,22 @@
     min-height: calc(100vh - 118px);
 }
 
+.custom_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
 .register {
-    color: #32415b;
     font-family: Georgia, sans-serif;
     color: #dba95e;
+    font-weight: bold;
+}
+
+.custom_font {
+    color: #32415b;
+    font-family: Georgia, sans-serif;
     font-weight: bold;
 }
 
@@ -13,4 +25,35 @@
     color: red;
     font-family: Georgia, sans-serif;
     /* font-weight: bold; */
+}
+
+.profile_photo {
+    width: 20%;
+    display: flex;
+    justify-content: center;
+}
+
+.profile_board {
+    margin: 2%;
+    width: 60%;
+    display: flex;
+    justify-content:space-between;
+    align-self: center;
+}
+.profile_data {
+    display: flex;
+    justify-content:flex-end;
+
+}
+
+.td_left {
+    width: 50%;
+    background-color: #dba95e;
+    text-align: center;
+}
+
+.td_right {
+    width: 50%;
+    background-color:aliceblue;
+    text-align: center;
 }

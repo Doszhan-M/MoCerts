@@ -132,19 +132,26 @@
                                 </div>
                             </div>
                             <div style="position: absolute; top: 45%; left: 30%;">
+                                {% include "account/errors.html" %}
                                 <p>{{ form.login }}</p>
                                 <p>{{ form.password }}</p>
-                                <div style="position: absolute; top: 130%;">
+                                <div style="position: absolute; top: 125%;">
                                     <a href="{% provider_login_url 'google' %}">
                                         <img src="{% static 'img/google_mono.png' %}" alt="Пример">
-                                        <a href="{% provider_login_url 'google' %}">
-                                            <img src="{% static 'img/facebook_mono.png' %}" alt="Пример">
-                                            <a href="{% provider_login_url 'google' %}">
-                                                <img src="{% static 'img/instagram_mono.png' %}" alt="Пример">
-                                                <a href="{% provider_login_url 'google' %}">
-                                                    <img src="{% static 'img/vk_mono.png' %}" alt="Пример">
-                                                </a>
+                                    </a>
+                                    <a href="{% provider_login_url 'google' %}">
+                                        <img src="{% static 'img/facebook_mono.png' %}" alt="Пример">
+                                    </a>
+                                    <a href="{% provider_login_url 'google' %}">
+                                        <img src="{% static 'img/instagram_mono.png' %}" alt="Пример">
+                                    </a>
+                                    <a href="{% provider_login_url 'google' %}">
+                                        <img src="{% static 'img/vk_mono.png' %}" alt="Пример">
+                                    </a>
                                 </div>
+                                <a style="position: absolute; top: 190%;" class="button secondaryAction" href="{% url 'account_reset_password' %}">
+                                    {% trans "Forgot Password?" %}
+                                </a>
                             </div>
 
                             {% if redirect_field_value %}
@@ -245,7 +252,7 @@
 
         <div class="header__container">
             <div class="logo">
-                <img src="{% static 'img/logo.webp' %}" alt="Logotype">
+                <a href="{% url 'main_page' %}"><img src="{% static 'img/logo.webp' %}" alt="Logotype"></a>
             </div>
             {% if user.is_authenticated %}
             <a href="#" style="text-decoration: none;">
@@ -311,9 +318,15 @@
     <section class="nav" id="nav">
         <nav class="main__nav">
             <ul class="main__nav--ul">
+                {% if user.is_authenticated %}
+                <li class="main__nav--item">
+                    <a href="{% url 'profile' %}" style="text-decoration: none;">{% trans 'Личный кабинет' %}</a>
+                </li>
+                {% else %}
                 <li class="main__nav--item">
                     <a href="{% url 'main_page' %}" style="text-decoration: none;">{% trans 'Home' %}</a>
                 </li>
+                {% endif %}
                 <li class="main__nav--item">
                     <a href="select_certificat" style="text-decoration: none;">
                         {% trans 'Create Certificate' %}
