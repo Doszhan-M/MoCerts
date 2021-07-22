@@ -191,6 +191,6 @@ try:
     ADMINS = [('Dos', 'dos891@mail.ru'),]
     SERVER_EMAIL = email
     DEFAULT_FROM_EMAIL = email  # Используется для отправки email после регистрации
-    EMAIL_SUBJECT_PREFIX = '[FanBlog] '
+    EMAIL_SUBJECT_PREFIX = '[Mosert] '
 except FileNotFoundError:
     print('Не найдены файлы настроек почтового сервера')

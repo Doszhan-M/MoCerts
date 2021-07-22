@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 {% extends "account/base.html" %}
 {% load i18n %}
+{% load static %}
+{% load socialaccount %}
 
 {% block title %}
 {{ block.super }} : Регистрация
@@ -32,6 +34,21 @@
           <button style="position: relative;top: -10px; color: #dba95e;" class="btn" type="submit">
             {% trans "Sign Up" %}
           </button>
+
+          <div style="position: absolute; top: 108%; left:0.5%;">
+            <a href="{% provider_login_url 'google' %}">
+                <img src="{% static 'img/google_mono.png' %}" alt="Пример">
+            </a>
+            <a href="{% provider_login_url 'google' %}">
+                <img src="{% static 'img/facebook_mono.png' %}" alt="Пример">
+            </a>
+            <a href="{% provider_login_url 'google' %}">
+                <img src="{% static 'img/instagram_mono.png' %}" alt="Пример">
+            </a>
+            <a href="{% provider_login_url 'google' %}">
+                <img src="{% static 'img/vk_mono.png' %}" alt="Пример">
+            </a>
+        </div>
 
         </div>
       </form>

@@ -1,5 +1,8 @@
 {% extends "account/base.html" %}
 {% load i18n %}
+{% load static %}
+{% load socialaccount %}
+
 
 {% block title %}
 {{ block.super }} : Вход на сайт
@@ -26,7 +29,22 @@
                         <button style="position: relative;top: -10px; color: #dba95e;" class="btn" type="submit">
                             {%trans "Sign In" %}
                         </button>
-                    </div><br><br>
+                    </div><br>
+
+                    <div style="position: relative; top: 40%; bottom:40%">
+                        <a href="{% provider_login_url 'google' %}">
+                            <img src="{% static 'img/google_mono.png' %}" alt="Пример">
+                        </a>
+                        <a href="{% provider_login_url 'google' %}">
+                            <img src="{% static 'img/facebook_mono.png' %}" alt="Пример">
+                        </a>
+                        <a href="{% provider_login_url 'google' %}">
+                            <img src="{% static 'img/instagram_mono.png' %}" alt="Пример">
+                        </a>
+                        <a href="{% provider_login_url 'google' %}">
+                            <img src="{% static 'img/vk_mono.png' %}" alt="Пример">
+                        </a>
+                    </div><br>
 
                     <a class="button secondaryAction" href="{% url 'account_reset_password' %}">
                         {% trans "Forgot Password?" %}
