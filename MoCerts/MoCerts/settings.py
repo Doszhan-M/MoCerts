@@ -133,8 +133,11 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static"),]
+
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_DIR = os.path.join(BASE_DIR, 'media/')
+MEDIA_ROOT = MEDIA_DIR
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
@@ -194,3 +197,5 @@ try:
     EMAIL_SUBJECT_PREFIX = '[Mosert] '
 except FileNotFoundError:
     print('Не найдены файлы настроек почтового сервера')
+
+HOST = 'http://127.0.0.1:8000'

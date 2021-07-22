@@ -1,0 +1,42 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block head %}
+<meta property="og:url"
+      content="http://www.nytimes.com/2015/02/19/arts/international/when-great-minds-dont-think-alike.html"/>
+<meta property="og:type" content="article"/>
+<meta property="og:title" content="When Great Minds Don’t Think Alike"/>
+<meta property="og:description" content="How much does culture influence creative thinking?"/>
+<meta property="og:image"
+      content="http://static01.nyt.com/images/2015/02/19/arts/international/19iht-btnumbers19A/19iht-btnumbers19A-facebookJumbo-v2.jpg"/>
+<!--<meta property="og:image" content="{{ certificate.certificate_image.url }}">-->
+{% endblock %}
+{% block content %}
+<h1 class="h1-certificate">{% trans 'Congratulation! You are create new Certificate' %}</h1>
+<div class="container">
+    <div class="big_certificate">
+        <img src="{{ certificate.certificate_image.url }}" alt="">
+    </div>
+    <div class="transfer_btn">
+        {% if transfer %}
+        <a href="{% url 'pay_certificate' pk=certificate.pk %}">
+            <img src="{% static 'img/transfer.webp' %}" alt="">
+        </a>
+        {% elif accept %}
+        <a href="{% url 'accept' pk=certificate.pk %}">
+            <img src="{% static 'img/accept.png' %}" alt="accept.png">
+        </a>
+        {% else %}
+        {% if certificate.status == 'RECEIVED' %}
+        <span>{% trans 'Сертификат получен' %}</span>
+        {% elif certificate.status == 'PAID' %}
+        <span>{% trans 'Сертификат оплачен' %}</span>
+        {% else %}
+        <span>{% trans 'Скопируйте ссылку для отправки' %}</span>
+        {% endif %}
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
