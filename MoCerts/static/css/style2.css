@@ -189,9 +189,10 @@ li {
     background-size: cover;
     display: flex;
     justify-content: center;
-    padding-top: 10px;
-    width: 169px;
-    height: 49px;
+    align-items: center;
+    padding: 1%;
+    height: 57px;
+
 }
 
 .main__nav--item a {

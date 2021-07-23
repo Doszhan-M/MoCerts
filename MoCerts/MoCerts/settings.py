@@ -27,8 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-
-# Application definition
+HOST = 'http://127.0.0.1:8000'
+MONEY_ADMIN = {'username':'money', 'first_name':'MONEY_ADMIN', 'last_name':'money',
+                'email':'money@gmail.com', 'password':'MONEY_ADMIN!'}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -197,5 +198,3 @@ try:
     EMAIL_SUBJECT_PREFIX = '[Mosert] '
 except FileNotFoundError:
     print('Не найдены файлы настроек почтового сервера')
-
-HOST = 'http://127.0.0.1:8000'

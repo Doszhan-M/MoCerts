@@ -1,378 +1,43 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load i18n %}
+
 {% block head %}
 {% endblock %}
+
 {% block content %}
-{% load i18n %}
+
 <div class="container">
     <span class="my-certs-disc">
         {% trans 'Для отправки сертификатов скопируйте ссылку и нажмите самолетик, выбрав социальную сеть. После того как человек получит и активирует его, статус меняется на получен, после оплаты на оплачен' %}
     </span>
 </div>
 <p></p>
-{% if certificates_1 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-1.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-1.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-1.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-1.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-1.png' %}" alt="">
-    </div>
+
+<!-- <div class="mesh_container"> -->
+<div class="">
     <div class="cert_list">
-        {% for cert in certificates_1 %}
+        {% for cert in my_cert_list %}
         <div class="cert_row">
-            <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-            {% if cert.get_status_display %}
-            <span>{{ cert.get_status_display|lower }}</span>
-            {% else %}
-            <span>{% trans 'не получен' %}</span>
-            {% endif %}
-            <div class="messagers">
-                <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                    <div class="telegram-share"></div>
-                </a>
-                <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="whatsapp-share"></div>
-                </a>
-                <a href="https://ru-ru.facebook.com/" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="facebook-share"></div>
-                </a>
-                <a href="https://www.instagram.com" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="instagram-share"></div>
-                </a>
-                <a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-                   onclick="CopyUrl(this)">
-                    <div class="mail-share"></div>
-                </a>
+            <div class="stack_imgs">
+                <img class="stack_imgs_1" src="{{ cert.certificate_image.url }}" alt="certificate">
             </div>
+
+            <a href="{% url 'certificate' number=cert.number %}">
+                № {{ cert.number }}<span>{% trans 'не оплачен' %}</span>
+            </a>
+
+                <div class="main__nav--item" style="width: 15%; height: 35%;">
+                    <button style="position: relative;top: -5px; color: #dba95e;" class="btn" type="submit">
+                        <a href="{% url 'certificate' number=cert.number %}" style="text-decoration: none;">
+                            {% trans "Оплатить" %}
+                        </a>
+                    </button>
+                </div>         
+
         </div>
         {% endfor %}
     </div>
 </div>
-{% endif %}
-{% if certificates_5 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-2.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-2.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-2.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-2.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-2.png' %}" alt="">
-    </div>
-    <div class="cert_list">
-        {% for cert in certificates_5 %}
-        <div class="cert_row">
-            <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-            {% if cert.get_status_display %}
-            <span>{{ cert.get_status_display|lower }}</span>
-            {% else %}
-            <span>{% trans 'не получен' %}</span>
-            {% endif %}
-            <div class="messagers">
-                <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                    <div class="telegram-share"></div>
-                </a>
-                <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="whatsapp-share"></div>
-                </a>
-                <a href="https://ru-ru.facebook.com/" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="facebook-share"></div>
-                </a>
-                <a href="https://www.instagram.com" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="instagram-share"></div>
-                </a>
-                <a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-                   onclick="CopyUrl(this)">
-                    <div class="mail-share"></div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-{% if certificates_10 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-3.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-3.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-3.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-3.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-3.png' %}" alt="">
-    </div>
-    <div class="cert_list">
-        {% for cert in certificates_10 %}
-        <div class="cert_row">
-            <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-            {% if cert.get_status_display %}
-            <span>{{ cert.get_status_display|lower }}</span>
-            {% else %}
-            <span>{% trans 'не получен' %}</span>
-            {% endif %}
-            <div class="messagers">
-                <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                    <div class="telegram-share"></div>
-                </a>
-                <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="whatsapp-share"></div>
-                </a>
-                <a href="https://ru-ru.facebook.com/" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="facebook-share"></div>
-                </a>
-                <a href="https://www.instagram.com" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="instagram-share"></div>
-                </a>
-                <a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-                   onclick="CopyUrl(this)">
-                    <div class="mail-share"></div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-{% if certificates_20 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-4.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-4.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-4.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-4.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-4.png' %}" alt="">
-    </div>
-    <div class="cert_list">
-        {% for cert in certificates_20 %}
-        <div class="cert_row">
-            <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-            {% if cert.get_status_display %}
-            <span>{{ cert.get_status_display|lower }}</span>
-            {% else %}
-            <span>{% trans 'не получен' %}</span>
-            {% endif %}
-            <div class="messagers">
-                <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                    <div class="telegram-share"></div>
-                </a>
-                <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="whatsapp-share"></div>
-                </a>
-                <a href="https://ru-ru.facebook.com/" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="facebook-share"></div>
-                </a>
-                <a href="https://www.instagram.com" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="instagram-share"></div>
-                </a>
-                <a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-                   onclick="CopyUrl(this)">
-                    <div class="mail-share"></div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-{% if certificates_50 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-5.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-5.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-5.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-5.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-5.png' %}" alt="">
-    </div>
-    <div class="cert_list">
-        {% for cert in certificates_50 %}
-        <div class="cert_row">
-            <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-            {% if cert.get_status_display %}
-            <span>{{ cert.get_status_display|lower }}</span>
-            {% else %}
-            <span>{% trans 'не получен' %}</span>
-            {% endif %}
-            <div class="messagers">
-                <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                    <div class="telegram-share"></div>
-                </a>
-                <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="whatsapp-share"></div>
-                </a>
-                <a href="https://ru-ru.facebook.com/" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="facebook-share"></div>
-                </a>
-                <a href="https://www.instagram.com" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="instagram-share"></div>
-                </a>
-                <a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-                   onclick="CopyUrl(this)">
-                    <div class="mail-share"></div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-{% if certificates_100 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-6.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-6.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-6.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-6.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-6.png' %}" alt="">
-    </div>
-    <div class="cert_list">
-        <ol>
-            {% for cert in certificates_100 %}
-            <div class="cert_row">
-                <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-                {% if cert.get_status_display %}
-                <span>{{ cert.get_status_display|lower }}</span>
-                {% else %}
-                <span>{% trans 'не получен' %}</span>
-                {% endif %}
-                <div class="messagers">
-                    <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                        <div class="telegram-share"></div>
-                    </a>
-                    <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                       data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                        <div class="whatsapp-share"></div>
-                    </a>
-                    <a href="https://ru-ru.facebook.com/" target="_blank"
-                       data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                        <div class="facebook-share"></div>
-                    </a>
-                    <a href="https://www.instagram.com" target="_blank"
-                       data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                        <div class="instagram-share"></div>
-                    </a>
-                    <a href="https://mail.ru/" target="_blank"
-                       data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                        <div class="mail-share"></div>
-                    </a>
-                </div>
-            </div>
-            {% endfor %}
-        </ol>
-    </div>
-</div>
-{% endif %}
-{% if certificates_200 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-7.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-7.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-7.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-7.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-7.png' %}" alt="">
-    </div>
-    <div class="cert_list">
-        {% for cert in certificates_200 %}
-        <div class="cert_row">
-            <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-            {% if cert.get_status_display %}
-            <span>{{ cert.get_status_display|lower }}</span>
-            {% else %}
-            <span>{% trans 'не получен' %}</span>
-            {% endif %}
-            <div class="messagers">
-                <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                    <div class="telegram-share"></div>
-                </a>
-                <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="whatsapp-share"></div>
-                </a>
-                <a href="https://ru-ru.facebook.com/" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="facebook-share"></div>
-                </a>
-                <a href="https://www.instagram.com" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="instagram-share"></div>
-                </a>
-                <a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-                   onclick="CopyUrl(this)">
-                    <div class="mail-share"></div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-{% if certificates_500 %}
-<div class="mesh_container">
-    <div class="stack_imgs">
-        <img class="stack_imgs_1" src="{% static 'img/sert-8.png' %}" alt="">
-        <img class="stack_imgs_2" src="{% static 'img/sert-8.png' %}" alt="">
-        <img class="stack_imgs_3" src="{% static 'img/sert-8.png' %}" alt="">
-        <img class="stack_imgs_4" src="{% static 'img/sert-8.png' %}" alt="">
-        <img class="stack_imgs_5" src="{% static 'img/sert-8.png' %}" alt="">
-    </div>
-    <div class="cert_list">
-        {% for cert in certificates_500 %}
-        <div class="cert_row">
-            <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-            {% if cert.get_status_display %}
-            <span>{{ cert.get_status_display|lower }}</span>
-            {% else %}
-            <span>{% trans 'не получен' %}</span>
-            {% endif %}
-            <div class="messagers">
-                <a href="https://t.me/share?url={{ cert.get_absolute_url }}" target="_blank">
-                    <div class="telegram-share"></div>
-                </a>
-                <a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="whatsapp-share"></div>
-                </a>
-                <a href="https://ru-ru.facebook.com/" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="facebook-share"></div>
-                </a>
-                <a href="https://www.instagram.com" target="_blank"
-                   data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-                    <div class="instagram-share"></div>
-                </a>
-                <a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-                   onclick="CopyUrl(this)">
-                    <div class="mail-share"></div>
-                </a>
-            </div>
-        </div>
-        {% endfor %}
-    </div>
-</div>
-{% endif %}
-<script>
-        var HOST = 'https//mocerts.com'
-        function CopyUrl(el) {
-          var area = document.createElement('textarea');
-            document.body.appendChild(area);
-            area.value = HOST + el.dataset.url;
-            area.select();
-            document.execCommand("copy");
-            document.body.removeChild(area);
-        }
-</script>
+
 {% endblock %}

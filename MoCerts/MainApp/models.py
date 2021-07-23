@@ -9,7 +9,8 @@ class CustomUser(AbstractUser):
         upload_to='accounts/image/%Y/%m/%d', blank=True, verbose_name='Аватарка')
     certificate = models.ForeignKey('Certificate', on_delete=models.SET_NULL, null=True, blank=True)
     telegram_id = models.BigIntegerField(verbose_name='telegram id', blank=True, default=0)
-    balance = models.IntegerField(verbose_name='balance', default=0)
+    balance = models.PositiveIntegerField(verbose_name='balance', default=0)
+    real_account = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = 'Пользователь'
@@ -26,11 +27,6 @@ class CustomUser(AbstractUser):
 
 class Certificate(models.Model):
     '''модель сертификата'''
-    STATUS = [
-        ('NONE', ''),
-        ('RECEIVED', 'Получен'),
-        ('PAID', 'Оплачен'),
-    ]
     number = models.BigIntegerField(verbose_name='Номер сертификата')
     url = models.URLField(max_length=255, verbose_name='Ссылка на сертификат')
     nominal = models.IntegerField(verbose_name='Номинал', default=1)
@@ -39,9 +35,12 @@ class Certificate(models.Model):
     user3 = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name='third_users')
     published_date = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
     certificate_image = models.ImageField(default=None)
-    made_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
+    made_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
                                 related_name='made_by_user')
-    status = models.CharField(max_length=15, choices=STATUS, default='NONE')
+    payment_status = models.BooleanField(default=False)                               
+    is_accept = models.BooleanField(default=True)      
+    owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
+                                related_name='owner')                       
 
     class Meta:
         verbose_name = 'Сертификат'

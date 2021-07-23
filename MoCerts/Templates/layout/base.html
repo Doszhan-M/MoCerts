@@ -7,7 +7,7 @@
 
 
 <html lang="en">
-<head prefix="og: https://ogp.me/ns#">
+<head>
     
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Студия Палыча">
@@ -249,7 +249,6 @@
             <a data-bs-toggle="modal" data-bs-target="#login">
                 <span class="header__reg">{% trans 'Login' %}</span>
             </a>
-
             {% endif %}
 
             <div class="dropdown">
@@ -301,31 +300,33 @@
                 {% endif %}
                 <li class="main__nav--item">
                     <a href="{% url 'select_certificate' %}" style="text-decoration: none;">
-                        {% trans 'Create Certificate' %}
+                        {% trans 'Получить сертификат' %}
                     </a>
                 </li>
                 <li class="main__nav--item">
-                    <a href="{% url 'my_certificates' %}" style="text-decoration: none;">{% trans 'My Certificates' %}</a>
+                    <a href="{% url 'my_certificates' %}" style="text-decoration: none;">{% trans 'Мои сертификаты' %}</a>
                 </li>
                 <li class="main__nav--item">
-                    <a href="{% url 'manual' %}" style="text-decoration: none;">{% trans 'Instruction' %}</a>
+                    <a href="{% url 'manual' %}" style="text-decoration: none;">{% trans 'Инструкции' %}</a>
                 </li>
             </ul>
         </nav>
     </section>
-    <div class="container">
+
+    <!-- messages -->
+    <div class="container"><br>
         <div class="row">
             {% for i in messages %}
             {% if i.tags == 'error' %}
             <div class="col">
-                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <div style="text-align: center;" class="alert alert-danger alert-dismissible fade show" role="alert">
                     {{i}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             </div>
             {% else %}
             <div class="col">
-                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                <div style="text-align: center;" class="alert alert-primary alert-dismissible fade show" role="alert">
                     {{i}}
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
