@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+{% load socialaccount %}
+
+
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                {% if SignupForm %}
+                <form action="{% url 'account_login' %}" method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <img class="profile-photo_img" src="/static/img/register_bg.jpg" alt="" width="100%">
+                    <div align="center" style="position: absolute; top: 17%; left: 44%;">
+                        <h3>{% trans 'Войти' %}</h3>
+                    </div>
+                    <div class="profile-data-register">
+                        <div style="position: absolute; top: 27%; left: 21%;">
+                            {% include "account/errors.html" %}
+                            <p>{{ form.login }}</p>
+                            <p>{{ form.password }}</p>
+                            <div style="position: absolute; top: 127%;">
+                                <a href="{% provider_login_url 'google' %}">
+                                    <img width="310px" src="{% static 'img/google_long.png' %}" alt="google_long">
+                                </a>
+                                <a href="{% provider_login_url 'google' %}">
+                                    <img width="310px" src="{% static 'img/fb_long.png' %}" alt="fb_long">
+                                </a>
+                            </div>
+                            <a style="position: absolute; top: 250%; text-decoration: none;" class="button secondaryAction"
+                                href="{% url 'account_reset_password' %}">
+                                {% trans "Forgot Password?" %}
+                            </a>
+                        </div>
+
+                        {% if redirect_field_value %}
+                        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+                        {% endif %}
+
+                        <div style="position: absolute; top: 70%; left:10%; width:100%">
+                            <div class="main__nav--item" style="width: 30%;">
+                                <a class="btn" href="" data-bs-toggle="modal" data-bs-dismiss="modal"
+                                    style="position: relative;top: -5px; color: #dba95e; text-decoration: none;"
+                                    data-bs-target="#registration">
+                                    {% trans 'Регистрация' %}
+                                </a>
+                            </div>
+                            <div class="main__nav--item"
+                                style="position: absolute; left:50%; top:-5%;width: 30%; max-height:100%">
+                                <button type="submit" class="btn"
+                                    style="position: relative;top: -5px; color: #dba95e; font-size: 2ch;">
+                                    {% trans "Sign In" %}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                {% else %}
+                <div style="display:flex; justify-content: center;">
+                    <div class="main__nav--item" style="width: 30%;">
+                        <a class="btn" href="{% url 'account_login' %}"
+                            style="position: relative;top: -10px; color: #dba95e; text-decoration: none;">
+                            {% trans 'Sign In' %}
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>

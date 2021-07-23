@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+{% load static %}
+{% load i18n %}
+{% load socialaccount %}
+
+<div class="modal fade" id="registration" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                {% if SignupForm %}
+                <img class="profile-photo_img" src="/static/img/register_bg.jpg" alt="" width="100%">
+                <div align="center" style="position: absolute; top: 17%; left: 35%;">
+                    <h3>{% trans 'Registration' %}</h3>
+                </div>
+                <div class="profile-data-register">
+                    <form class="signup" action="{% url 'account_signup' %}" method="post" id="signup_form">
+                        {% csrf_token %}
+                        <div style="position: absolute; top: 27%; left: 22%;">
+                            <p>{{ SignupForm.first_name }}</p>
+                            <p>{{ SignupForm.last_name }}</p>
+                            <p>{{ SignupForm.email }}</p>
+                            <p>{{ SignupForm.password1 }}</p>
+                            <p>{{ SignupForm.password2 }}</p>
+                            <div style="position: absolute; top: 105%;">
+                                <a href="{% provider_login_url 'google' %}">
+                                    <img width="310px" src="{% static 'img/google_long.png' %}" alt="google_long">
+                                </a>
+                                <a href="{% provider_login_url 'google' %}">
+                                    <img width="310px" src="{% static 'img/fb_long.png' %}" alt="fb_long">
+                                </a>
+                            </div>
+                        </div>
+                        <div style="position: absolute; top: 77%; left:10%; width:100%">
+                            <div class="main__nav--item" style="width: 30%;">
+                                <button type="submit" class="btn"
+                                    style="position: relative;top: -5px; color: #dba95e;">
+                                    {% trans 'Регистрация' %}
+                                </button>
+
+                            </div>
+                            <div class="main__nav--item"
+                                style="position: absolute; left:50%; top: 0%;width: 30%; max-height:100%">
+                                <a class="btn" href="" data-bs-toggle="modal" data-bs-dismiss="modal"
+                                    style="position: relative;top: -5px; color: #dba95e;" data-bs-target="#login">
+                                    {% trans 'Sign In' %}
+                                </a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                {% else %}
+                <div style="display:flex; justify-content: center;">
+                    <div class="main__nav--item" style="width: 30%;">
+                        <a class="btn" href="{% url 'account_signup' %}"
+                            style="position: relative;top: -10px; color: #dba95e; text-decoration: none;">
+                            {% trans 'Register' %}
+                        </a>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
