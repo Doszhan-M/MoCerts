@@ -809,6 +809,7 @@ a.registration {
 
 }
 
-.cert_share {
-    margin-bottom: 90%;
+.empty_page {
+    min-height: calc(100vh - 118px);
+
 }
