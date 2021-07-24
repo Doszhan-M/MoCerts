@@ -16,21 +16,7 @@
 
 {% block content %}
 <br>
-{% if certificate_need_accept and not certificate_need_pay%}
-<h1 class="h1-certificate">{% trans 'Пожалуйста, подтвердите сертификат' %}</h1>
-<div class="container">
-    <div class="big_certificate">
-        <img src="{{ certificate.certificate_image.url }}" alt="">
-    </div>
-    <div class="transfer_btn">
-        <a href="{% url 'accept' pk=certificate.pk %}">
-            <img src="{% static 'img/accept.png' %}" alt="accept.png">
-        </a>
-    </div>
-</div>
-{% endif %}
-
-{% if certificate_need_pay and not certificate_need_accept%}
+{% if need_pay and not need_accept and owner_is_here %}
 <h1 class="h1-certificate">{% trans 'Поздравляем! Вы получили новый сертификат' %}</h1>
 <div class="container">
     <div class="big_certificate">
@@ -44,22 +30,72 @@
 </div>
 {% endif %}
 
-{% if certificate_need_pay and certificate_need_accept %}
-<h1 class="h1-certificate">{% trans 'Скопируйте ссылку для отправки' %}</h1>
+
+{% if need_pay and need_accept and not owner_is_here %}
+<h1 class="h1-certificate">{% trans 'Пожалуйста, подтвердите сертификат' %}</h1>
 <div class="container">
     <div class="big_certificate">
         <img src="{{ certificate.certificate_image.url }}" alt="">
     </div>
-</div><br>
+    <div class="transfer_btn">
+        <a href="{% url 'accept' pk=certificate.pk %}">
+            <img src="{% static 'img/accept.png' %}" alt="accept.png">
+        </a>
+    </div>
+</div>
 {% endif %}
 
-<!-- {% if not certificate_need_pay and not certificate_need_accept %}
+{% if need_pay and need_accept and made_by %}
+<h1 class="h1-certificate">{% trans 'Скопируйте ссылку для отправки или поделитесь в соц сетях' %}
+</h1>
+
+<div style="margin: 1% 0% 2% 42%;" class="ya-share2" data-curtain data-shape="round"
+    data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,linkedin">
+</div>
+
+<div class="container">
+    <div class="big_certificate">
+        <img src="{{ certificate.certificate_image.url }}" alt="">
+    </div>
+    <div class="transfer_btn">
+    </div>
+</div>
+{% endif %}
+
+{% if not need_pay %}
 <h1 class="h1-certificate">{% trans 'Сертификат оплачен' %}</h1>
 <div class="container">
     <div class="big_certificate">
         <img src="{{ certificate.certificate_image.url }}" alt="">
     </div>
-</div><br> -->
+    <div class="transfer_btn">
+    </div>
+</div>
 {% endif %}
 
+{% if need_pay and not need_accept and made_by and not owner_is_here%}
+<h1 class="h1-certificate">{% trans 'Пользователь принял ваш сертификат' %}</h1>
+<div class="container">
+    <div class="big_certificate">
+        <img src="{{ certificate.certificate_image.url }}" alt="">
+    </div>
+    <div class="transfer_btn">
+    </div>
+</div>
+{% endif %}
+
+{% if need_pay and not need_accept and not made_by and not owner_is_here%}
+<h1 class="h1-certificate">{% trans 'Сертификат был подтвержден другим пользователем' %}</h1>
+<div class="container">
+    <div class="big_certificate">
+        <img src="{{ certificate.certificate_image.url }}" alt="">
+    </div>
+    <div class="transfer_btn">
+    </div>
+</div>
+{% endif %}
 {% endblock %}
+
+{% block script %}
+<script src="https://yastatic.net/share2/share.js"></script>
+{% endblock script%}

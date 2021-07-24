@@ -1,14 +1,10 @@
 from datetime import datetime
-from django.utils.functional import partition
 
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.views import PasswordChangeView
-from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
-from django.shortcuts import render, redirect
-from django.http import HttpResponseNotFound, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
 
@@ -51,41 +47,65 @@ class SelectCertificate(TemplateView):
     '''Страница выбора сертификата'''
     template_name = 'MainApp/select_certificate.html'
 
-
-class CertificateDetail(LoginRequiredMixin, DetailView):
+class CertificateDetail(DetailView):
     model = Certificate
     slug_field = "number"
     slug_url_kwarg = "number"
     context_object_name = 'certificate'
     template_name = 'MainApp/certificate.html'
 
+    def get(self, *args, **kwargs):
+        responsive = super().get(*args, **kwargs)
+        if self.request.user != self.object.owner:
+            '''если сертификат открыл другой польззователь, то отметить как получен'''
+            self.object.is_received = True
+            self.object.save()
+        return responsive
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        if self.object.payment_status == False:
-            context['certificate_need_pay'] = True
+        if self.object.is_paid == False:
+            context['need_pay'] = True
         if self.object.is_accept == False:
-            context['certificate_need_accept'] = True
-        if self.object.made_by == self.request.user:
+            context['need_accept'] = True
+        if self.object.owner == self.request.user:
             context['owner_is_here'] = True
+        if self.object.made_by == self.request.user:
+            context['made_by'] = True
+
         return context
 
 
 class MyCertificates(LoginRequiredMixin, ListView):
     '''Страница мои сертификаты'''
-    context_object_name = 'my_cert_list'
+    context_object_name = 'queryset'
     template_name = 'MainApp/my_certificates.html'
 
     def get_queryset(self):
-        queryset = Certificate.objects.filter(
-            made_by=self.request.user, is_accept=True)
+        '''отсортировать queryset по номиналам в списке'''
+        certificates = Certificate.objects.filter(
+            made_by=self.request.user,)
+        nominals = [1, 5, 10, 20, 50, 100, 200, 300,]
+        queryset = []
+        for i in nominals:
+            queryset.append([])
+            for cert in certificates:
+                if cert.nominal==i:
+                    queryset[nominals.index(i)].append(cert)
+        queryset = [x for x in queryset if x]
+        print(queryset)
         return queryset
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
-
+   
 @login_required
 def create_certificate(request, nominal):
     '''Создать сертификат'''
     if request.method == 'GET':
-        if Certificate.objects.filter(made_by=request.user, nominal=nominal, owner=request.user,):
+        if Certificate.objects.filter(nominal=nominal, owner=request.user, is_accept=True):
             return HttpResponseRedirect(reverse('certificate',
                                                 kwargs={'number': request.user.certificate.number}))
 
@@ -111,7 +131,7 @@ def create_certificate(request, nominal):
         image_certificate = generate_certificate(
             nominal, number, user1, user2, user3)
         certificate = Certificate(number=number, url=url, nominal=nominal, user1=user1, user2=user2, user3=user3,
-                                  certificate_image=image_certificate, made_by=request.user, owner=request.user,)
+                                  certificate_image=image_certificate, owner=request.user,)
         certificate.save()
         cert_owner = request.user
         cert_owner.certificate = certificate
@@ -127,7 +147,7 @@ def pay_certificate(request, pk):
     if certificate.owner == request.user:
         if request.user.balance >= certificate.nominal:
             certificate.owner = None
-            certificate.payment_status = True
+            certificate.is_paid = True
             certificate.save()
 
             request.user.balance -= certificate.nominal
@@ -153,9 +173,10 @@ def pay_certificate(request, pk):
                 image_certificate = generate_certificate(
                     certificate.nominal, number, user1, user2, user3)
                 url = '{}/certificate/{}'.format(settings.HOST, number)
-                new_certificate = Certificate(number=number, url=url, nominal=certificate.nominal,
-                                              user1=user1, user2=user2, user3=user3,
-                                              certificate_image=image_certificate, made_by=request.user)
+
+                new_certificate = Certificate(number=number, url=url, nominal=certificate.nominal, user1=user1,
+                                            user2=user2, user3=user3, certificate_image=image_certificate, 
+                                            made_by=request.user, is_accept=False, owner=request.user,)
                 new_certificate.save()
 
                                 
@@ -171,6 +192,7 @@ def accept(request, pk):
     '''Подтвердить сертификат'''
     certificate = Certificate.objects.get(pk=pk)
     certificate.is_accept = True
+    certificate.owner = request.user
     certificate.save()
     request.user.certificate = certificate
     request.user.save()

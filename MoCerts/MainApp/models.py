@@ -2,6 +2,9 @@ from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import AbstractUser
 
+from MoCerts.settings import HOST
+
+
 
 class CustomUser(AbstractUser):
     ''''кастомный юзер'''
@@ -36,12 +39,17 @@ class Certificate(models.Model):
     published_date = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
     certificate_image = models.ImageField(
         upload_to='certificates/image/%Y/%m/%d', blank=True, verbose_name='Аватарка')
-    made_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, null=True, blank=True,
+    made_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
                                 related_name='made_by_user')
-    payment_status = models.BooleanField(default=False)                               
-    is_accept = models.BooleanField(default=True)      
+    is_paid = models.BooleanField(default=False)                               
+    is_accept = models.BooleanField(default=True)
+    is_received = models.BooleanField(default=False)
     owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
-                                related_name='owner')                       
+                                related_name='owner') # для view мои сертификаты          
+
+    def get_url_for_messengers(self):
+        """получить ссылку на объект"""
+        return f"{HOST + str(reverse('certificate', kwargs={'number': self.number}))}"
 
     class Meta:
         verbose_name = 'Сертификат'
@@ -53,6 +61,6 @@ class Certificate(models.Model):
 
     def get_absolute_url(self):
         """получить ссылку на объект"""
-        return reverse('profile')
+        return reverse('certificate', kwargs={'number': self.number})
 
     

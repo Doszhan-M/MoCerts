@@ -27,7 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
-HOST = 'http://127.0.0.1:8000'
+# HOST = 'http://127.0.0.1:8000'
+HOST = 'http://doszhan.space:4000'
+
 MONEY_ADMIN = {'username':'money', 'first_name':'MONEY_ADMIN', 'last_name':'money',
                 'email':'money@gmail.com', 'password':'MONEY_ADMIN!'}
 
