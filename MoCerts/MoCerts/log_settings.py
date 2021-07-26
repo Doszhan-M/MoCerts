@@ -103,21 +103,21 @@ log_settings = {
             'formatter': 'colored',
         },
 
-        'mail_admins': {
-            'level': 'ERROR',
-            'filters': ['require_debug_false'],
-            'class': 'django.utils.log.AdminEmailHandler',
-            'formatter': 'colored',
-            'include_html': True,
-            'email_backend': 'allauth.account.auth_backends.AuthenticationBackend',
-        },
+        # 'mail_admins': {
+        #     'level': 'ERROR',
+        #     'filters': ['require_debug_false'],
+        #     'class': 'django.utils.log.AdminEmailHandler',
+        #     'formatter': 'colored',
+        #     'include_html': True,
+        #     'email_backend': 'djcelery_email.backends.CeleryEmailBackend',
+        # },
         
-        'celery_handler': { # это настройка не работает TODO
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': os.path.join(BASE_DIR, 'log/celery_log.log'),
+        # 'celery_handler': { # это настройка не работает TODO
+        #     'level': 'INFO',
+        #     'class': 'logging.FileHandler',
+        #     'filename': os.path.join(BASE_DIR, 'log/celery_log.log'),
 
-        }
+        # }
     },
 
     'formatters': {  
