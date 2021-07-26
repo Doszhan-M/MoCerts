@@ -1,7 +1,6 @@
 # My temp files
 /venv/
-/media/certificates/
-/media/accounts/
+/MoCerts/media/
 **/.idea/
 **/__pycache__/
 dump.rdb
