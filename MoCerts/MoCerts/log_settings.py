@@ -109,7 +109,7 @@ log_settings = {
             'class': 'django.utils.log.AdminEmailHandler',
             'formatter': 'colored',
             'include_html': True,
-            'email_backend': 'djcelery_email.backends.CeleryEmailBackend',
+            'email_backend': 'allauth.account.auth_backends.AuthenticationBackend',
         },
         
         'celery_handler': { # это настройка не работает TODO
