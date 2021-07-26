@@ -2,6 +2,7 @@
 {% load static %}
 {% load i18n %}
 {% load custom_filters %}
+{% load thumbnail %}
 
 
 {% block property %}
@@ -23,7 +24,7 @@
         <div class="certs_container">
             <div class="stack_imgs">
                 {% for cert in my_certs_list %}
-                <img class="stack_imgs_{{ forloop.counter }}" src="{{ cert.certificate_image.url }}" alt="">
+                <img class="stack_imgs_{{ forloop.counter }}" src="{{ cert.certificate_image|thumbnail_url:'my_certs_page' }}" alt="certificate">
                 {% endfor %}
             </div>
             <div class="cert_list">

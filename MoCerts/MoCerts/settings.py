@@ -127,12 +127,9 @@ MEDIA_ROOT = MEDIA_DIR
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 THUMBNAIL_ALIASES = {
-    'avatar':
+    '':
         {
-            'small': {
-                'size': (50, 50),
-                'crop': 'smart'
-            }
+            'my_certs_page': {'size': (182, 129), 'crop': 'smart'}
         }
 }
 
