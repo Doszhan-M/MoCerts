@@ -58,6 +58,7 @@ body {
     margin-top: 1%;
    display: flex;
    flex-direction: row;
+   background-color: #9f7554;
    /* justify-content:flex-start; */
    /* align-items: center; */
    /* width: 100%; */
@@ -324,6 +325,7 @@ body {
     font-family: "mon";
     margin-left: 10px;
     min-width: 130px;
+    background-color: #e23815;
 }
 
 .big_certificate img {
