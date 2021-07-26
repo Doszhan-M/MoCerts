@@ -23,9 +23,6 @@ class MainView(FormView):
     def get_context_data(self, **kwargs):
         context = super(MainView, self).get_context_data(**kwargs)
         context['SignupForm'] = MySignupForm  # форма регистрации
-
-        logging.info('hello world')
-
         return context
 
 
