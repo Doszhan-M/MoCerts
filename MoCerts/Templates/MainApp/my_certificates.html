@@ -22,7 +22,6 @@
                 {% for cert in my_certs_list %}
                 <div class="cert_row">
                     <a href="{% url 'certificate' number=cert.number %}">№ {{ cert.number }}</a>
-
                     {% if cert.is_paid %}
                     <span>{% trans 'оплачен' %}</span>
                     {% else %}
@@ -36,6 +35,12 @@
                     {% endif %}
                     {% endif %}
                     {% endif %}
+
+                    {% if cert.is_paid %}
+                    <div class="messagers">
+                        <span>{{cert.paid_by_user.first_name}} {{cert.paid_by_user.last_name}}</span> 
+                    </div>
+                    {% else %}
                     <div class="messagers">
                         <a href="https://t.me/share?url={{ cert.get_url_for_messengers }}" target="_blank">
                             <div class="telegram-share"></div>
@@ -55,10 +60,9 @@
                             target="_blank">
                             <div class="mail-share"></div>
                         </a>
-                        <!-- <a href="https://pinterest.com/pin/create/button/?url={{ cert.get_url_for_messengers }}&description=Заработай с нами&media=http://doszhan.space:4000{{ cert.certificate_image.url }}" target="_blank">
-                        <div class="pinterest-share"></div>
-                    </a> -->
                     </div>
+                    {% endif %}
+
                 </div>
                 {% endfor %}
             </div>

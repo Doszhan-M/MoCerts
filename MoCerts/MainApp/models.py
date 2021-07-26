@@ -45,7 +45,9 @@ class Certificate(models.Model):
     is_accept = models.BooleanField(default=True)
     is_received = models.BooleanField(default=False)
     owner = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
-                                related_name='owner') # для view мои сертификаты          
+                                related_name='owner')           
+    paid_by_user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
+                                related_name='paid_by_user')           
 
     def get_url_for_messengers(self):
         """получить ссылку на объект"""

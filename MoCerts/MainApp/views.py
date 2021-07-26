@@ -47,6 +47,7 @@ class SelectCertificate(TemplateView):
     '''Страница выбора сертификата'''
     template_name = 'MainApp/select_certificate.html'
 
+
 class CertificateDetail(DetailView):
     model = Certificate
     slug_field = "number"
@@ -148,6 +149,7 @@ def pay_certificate(request, pk):
         if request.user.balance >= certificate.nominal:
             certificate.owner = None
             certificate.is_paid = True
+            certificate.paid_by_user = request.user
             certificate.save()
 
             request.user.balance -= certificate.nominal
