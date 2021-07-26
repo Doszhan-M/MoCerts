@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
+from colorama import Fore, Style
 
 
 try:
@@ -19,13 +20,10 @@ except ImportError:
     from .prod_settings import *
 
 
-ALLOWED_HOSTS = ['*']
-
-# HOST = 'http://127.0.0.1:8000'
-HOST = 'http://doszhan.space:4000'
-
 MONEY_ADMIN = {'username':'money', 'first_name':'MONEY_ADMIN', 'last_name':'money',
                 'email':'money@gmail.com', 'password':'MONEY_ADMIN!'}
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -180,4 +178,5 @@ try:
     DEFAULT_FROM_EMAIL = email  # Используется для отправки email после регистрации
     EMAIL_SUBJECT_PREFIX = '[Mosert] '
 except FileNotFoundError:
-    print('Не найдены файлы настроек почтового сервера')
+    print(Fore.RED + 'Не найдены файлы настроек почтового сервера')
+    print(Style.RESET_ALL)

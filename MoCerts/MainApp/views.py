@@ -65,6 +65,7 @@ class CertificateDetail(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        context['host'] = settings.HOST
         if self.object.is_paid == False:
             context['need_pay'] = True
         if self.object.is_accept == False:
@@ -73,7 +74,6 @@ class CertificateDetail(DetailView):
             context['owner_is_here'] = True
         if self.object.made_by == self.request.user:
             context['made_by'] = True
-
         return context
 
 
@@ -86,7 +86,7 @@ class MyCertificates(LoginRequiredMixin, ListView):
         '''отсортировать queryset по номиналам в списке'''
         certificates = Certificate.objects.filter(
             made_by=self.request.user,)
-        nominals = [1, 5, 10, 20, 50, 100, 200, 300,]
+        nominals = [1, 5, 10, 20, 50, 100, 200, 500,]
         queryset = []
         for i in nominals:
             queryset.append([])
@@ -94,7 +94,6 @@ class MyCertificates(LoginRequiredMixin, ListView):
                 if cert.nominal==i:
                     queryset[nominals.index(i)].append(cert)
         queryset = [x for x in queryset if x]
-        print(queryset)
         return queryset
     
     def get_context_data(self, **kwargs):

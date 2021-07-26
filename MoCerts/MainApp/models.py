@@ -65,4 +65,23 @@ class Certificate(models.Model):
         """получить ссылку на объект"""
         return reverse('certificate', kwargs={'number': self.number})
 
+
+class PreviewSettings(models.Model):
+    type = models.CharField(max_length=255, default='website', verbose_name='Тип приложения',)
+    site_name = models.CharField(max_length=255, default='MoCert', verbose_name='Название сайта',)
+    title = models.CharField(max_length=255, default='Заработай вместе с нами', verbose_name='Заголовок',)
+    description = models.CharField(max_length=255, default='Перейди по ссылке и получи сертификат', 
+                verbose_name='Описание',)
+    locale = models.CharField(max_length=255, default='ru', verbose_name='Локаль',)
+    twitter_creator = models.CharField(max_length=255, default='@MonteCarlo', verbose_name='twitter_creator',)
+    url = models.URLField(max_length=255, default=HOST, verbose_name='Ссылка на сайт',)
+    image = models.URLField(max_length=255, default=HOST + '/media/2607211245970578.png', verbose_name='Ссылка на картинку',)
+
+
+    class Meta:
+        verbose_name = 'Настройки превью'
+        verbose_name_plural = 'Настройки превью'
     
+    def __str__(self):
+        '''Строковое отображени'''
+        return f'{self.site_name}'

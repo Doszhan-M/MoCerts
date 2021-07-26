@@ -1,14 +1,18 @@
 {% extends 'layout/base.html' %}
 {% load static %}
+{% load custom_filters %}
 
-{% block head %}
 
-{% endblock %}
+{% block property %}
+<meta property="og:url" content="{{ 'url'|property }}">
+<meta property="og:image" content="{{ 'image'|property }}">
+{% endblock property%}
+
 {% block title %}
 Заработок в интернете | Mocerts
 {% endblock %}
-{% block content %}
 
+{% block content %}
 <main class="main">
     <div class="main__container">
         <div class="main__left">

@@ -1,8 +1,18 @@
 {% extends 'layout/base.html' %}
 {% load static %}
-{% block header_links %}
+{% load custom_filters %}
+{% load i18n %}
 
+
+{% block property %}
+<meta property="og:url" content="{{ 'url'|property }}">
+<meta property="og:image" content="{{ 'image'|property }}">
+{% endblock property%}
+
+{% block title %}
+{% trans 'Инструкции' %} | Mocerts
 {% endblock %}
+
 {% block content %}
 {% load i18n %}
 <div class="container">

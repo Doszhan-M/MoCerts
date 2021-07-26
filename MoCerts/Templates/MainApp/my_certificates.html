@@ -1,8 +1,16 @@
 {% extends 'layout/base.html' %}
 {% load static %}
 {% load i18n %}
+{% load custom_filters %}
 
-{% block head %}
+
+{% block property %}
+<meta property="og:url" content="{{ 'url'|property }}">
+<meta property="og:image" content="{{ 'image'|property }}">
+{% endblock property%}
+
+{% block title %}
+{% trans 'Мои сертификаты' %} | Mocerts
 {% endblock %}
 
 {% block content %}
