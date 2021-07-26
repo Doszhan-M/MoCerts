@@ -14,7 +14,6 @@ from .models import CustomUser, Certificate
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
 
-import logging 
 
 class MainView(FormView):
     '''Главная страница'''
@@ -26,7 +25,7 @@ class MainView(FormView):
         context['SignupForm'] = MySignupForm  # форма регистрации
 
         logging.info('hello world')
-        
+
         return context
 
 

@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
-from pathlib import Path
+from MoCerts.log_settings import log_settings
 from colorama import Fore, Style
 
 
@@ -180,3 +180,6 @@ try:
 except FileNotFoundError:
     print(Fore.RED + 'Не найдены файлы настроек почтового сервера')
     print(Style.RESET_ALL)
+
+# Логирование
+LOGGING = log_settings

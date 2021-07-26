@@ -20,6 +20,7 @@
     <div class="big_certificate">
         <img src="{{ certificate.certificate_image.url }}" alt="">
     </div>
+    {{ certificate.certificate_image.url }}
     <div class="transfer_btn">
         <a href="{% url 'pay_certificate' pk=certificate.pk %}">
             <img src="{% static 'img/transfer.webp' %}" alt="">

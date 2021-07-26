@@ -22,4 +22,4 @@ def generate_certificate(nominal, number, user1, user2, user3):
     file_name_result = f'{number}.png'
     file_name_result_path = os.path.join(settings.MEDIA_DIR + 'certificates', file_name_result)
     img.save(file_name_result_path)
-    return file_name_result
+    return 'certificates/' + file_name_result

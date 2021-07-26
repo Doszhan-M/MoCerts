@@ -38,7 +38,7 @@ class Certificate(models.Model):
     user3 = models.ForeignKey(CustomUser, on_delete=models.PROTECT, related_name='third_users')
     published_date = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликовано')
     certificate_image = models.ImageField(
-        upload_to='certificates/image/%Y/%m/%d', blank=True, verbose_name='Аватарка')
+        upload_to='certificates/image/%Y/%m/%d', blank=True, verbose_name='Рисунок')
     made_by = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
                                 related_name='made_by_user')
     is_paid = models.BooleanField(default=False)                               
