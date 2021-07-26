@@ -37,7 +37,7 @@ log_settings = {
     'loggers': {
         # логгер для принтов
         '': {
-            'handlers': ['console_log', 'common_file_log', 'mail_admins',],
+            'handlers': ['console_log', 'common_file_log',],
             'level': 'INFO',
             'propagate': True
         },
@@ -72,11 +72,11 @@ log_settings = {
             'propagate': True
         },
 
-        'celery': { # это настройка не работает TODO
-            'handlers': ['celery_handler'],
-            'level': 'INFO',
-            'propagate': True,
-        },
+        # 'celery': { # это настройка не работает TODO
+        #     'handlers': ['celery_handler'],
+        #     'level': 'INFO',
+        #     'propagate': True,
+        # },
 
     },
 
