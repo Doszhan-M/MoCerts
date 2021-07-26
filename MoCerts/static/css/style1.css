@@ -325,7 +325,12 @@ body {
     font-family: "mon";
     margin-left: 10px;
     min-width: 130px;
-    background-color: #e23815;
+}
+
+.messagers span{
+    font-family: "mon";
+    margin-left: 10px;
+    min-width: 170px;
 }
 
 .big_certificate img {
