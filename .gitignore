@@ -9,11 +9,7 @@ favicon.ico:Zone.Identifier
 **/.vscode/
 local_settings.py
 test.py
-ADMINS.txt
-EMAIL_HOST_PASSWORD.txt
-EMAIL_HOST_USER.txt
-EMAIL_HOST.txt
-SECRET_KEY.txt
+
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
