@@ -13,6 +13,9 @@ from .models import CustomUser, Certificate, ManualPosts
 
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
+import logging
+
+logger = logging.getLogger(__name__)
 
 
 class MainView(FormView):
@@ -44,6 +47,12 @@ class ManualView(ListView):
     context_object_name = 'manuals'
     template_name = 'MainApp/manual.html'
     ordering = 'index_number'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print('self.request.is_secure()', self.request.is_secure())
+        logger.info(f'self.request.is_secure() {self.request.is_secure()}')
+        return context
 
 
 class SelectCertificate(TemplateView):
