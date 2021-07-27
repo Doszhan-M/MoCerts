@@ -77,6 +77,9 @@ TEMPLATES = [
     },
 ]
 
+
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 WSGI_APPLICATION = 'MoCerts.wsgi.application'
 
 # Password validation
