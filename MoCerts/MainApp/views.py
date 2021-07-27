@@ -48,11 +48,11 @@ class ManualView(ListView):
     template_name = 'MainApp/manual.html'
     ordering = 'index_number'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        print('self.request.is_secure()', self.request.is_secure())
-        logger.info(f'self.request.is_secure() {self.request.is_secure()}')
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     print('self.request.is_secure()', self.request.is_secure())
+    #     logger.info(f'self.request.is_secure() {self.request.is_secure()}')
+    #     return context
 
 
 class SelectCertificate(TemplateView):
