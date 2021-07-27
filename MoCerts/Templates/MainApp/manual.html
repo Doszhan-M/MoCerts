@@ -21,14 +21,10 @@
     <h5 class="manual_title">
         {{post.title}}
     </h5>
-    <div class="manual_video">
-    
+    <div class="manual_video">   
         {% video post.video as my_video %}
-        {% video my_video '500x300' %}
+        {% video my_video '470x260' %}
         {% endvideo %}
-      
-      <!-- Or embed shortcut: -->
-
     </div>
     {% endfor %}
 

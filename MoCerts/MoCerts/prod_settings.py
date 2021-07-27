@@ -19,6 +19,8 @@ DEBUG = False
 
 ALLOWED_HOSTS = ['doszhan.space', 'localhost', '127.0.0.1']
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 # Настройки для базы данных 
 DATABASES = {
     'default': {

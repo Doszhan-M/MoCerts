@@ -50,8 +50,8 @@ class ManualView(ListView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print('self.request.is_secure()', self.request.is_secure())
-        logger.info(f'self.request.is_secure() {self.request.is_secure()}')
+        if not self.request.is_secure():
+            logger.error(f'self.request.is_secure() {self.request.is_secure()}')
         return context
 
 
