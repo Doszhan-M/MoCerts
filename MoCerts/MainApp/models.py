@@ -92,7 +92,7 @@ class PreviewSettings(models.Model):
 class ManualPosts(models.Model):
     index_number = models.PositiveIntegerField(verbose_name='порядковый номер на странице',)
     title = models.CharField(max_length=255, verbose_name='Заголовок',)
-    video = models.URLField(blank=True, verbose_name='Ссылка на видео')
+    video = EmbedVideoField(blank=True, verbose_name='Ссылка на видео')
     
     class Meta:
         verbose_name = 'Инструкцию'
