@@ -1,0 +1,30 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load custom_filters %}
+{% load i18n %}
+{% load embed_video_tags %}
+
+
+{% block property %}
+<meta property="og:url" content="{{ 'url'|property }}">
+<meta property="og:image" content="{{ 'image'|property }}">
+{% endblock property%}
+
+{% block title %}
+{% trans 'Инструкции' %} | Mocerts
+{% endblock %}
+
+{% block content %}
+
+<div class="manual_container">
+    {% for post in manuals %}
+    <h5 class="manual_title">
+        {{post.title}}
+    </h5>
+    <div class="manual_video">
+    <iframe width="470" height="260" src="{{ post.video }}" loading="lazy" frameborder="0" allowfullscreen=""></iframe>
+    </div>
+    {% endfor %}
+
+</div>
+{% endblock %}
