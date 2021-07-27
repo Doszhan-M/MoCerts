@@ -95,13 +95,13 @@ class ManualPosts(models.Model):
     video = EmbedVideoField(blank=True, verbose_name='Видео')
     
     class Meta:
-        verbose_name = 'Инструкция'
+        verbose_name = 'Инструкцию'
         verbose_name_plural = 'Инструкции'
 
     def __str__(self):
         '''Строковое отображение'''
         return f'{self.title}'
 
-    # def get_absolute_url(self):
-    #     """получить ссылку на объект"""
-    #     return reverse('certificate', kwargs={'number': self.number})
+    def get_absolute_url(self):
+        """получить ссылку на объект"""
+        return reverse('manual',)

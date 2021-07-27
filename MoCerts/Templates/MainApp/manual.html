@@ -18,11 +18,15 @@
 
 <div class="manual_container">
     {% for post in manuals %}
-    {{post.index_number}}
-    {{post.title}}
-
-    <iframe src="https://youtu.be/jkwVOnXcrek" disallowfullscreen=""></iframe>
+    <h5 class="manual_title">
+        {{post.title}}
+    </h5>
+    <div class="manual_video">
+        {% video post.video as my_video %}
+        {% video my_video '470x260' %}
+        {% endvideo %}
+    </div>
     {% endfor %}
-</div>
 
+</div>
 {% endblock %}

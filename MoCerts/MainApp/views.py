@@ -43,6 +43,7 @@ class ManualView(ListView):
     model = ManualPosts
     context_object_name = 'manuals'
     template_name = 'MainApp/manual.html'
+    ordering = 'index_number'
 
 
 class SelectCertificate(TemplateView):
