@@ -22,11 +22,8 @@
         {{post.title}}
     </h5>
     <div class="manual_video">
-        {% video post.video as my_video %}
-        {% video my_video '470x260' %}
-        {% endvideo %}
+    <iframe width="470" height="260" src="{{ post.video }}" loading="lazy" frameborder="0" allowfullscreen=""></iframe>
     </div>
-    
     {% endfor %}
 
 </div>
