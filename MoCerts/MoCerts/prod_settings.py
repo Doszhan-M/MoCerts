@@ -2,7 +2,7 @@ import os
 from pathlib import Path
 from colorama import Fore, Style
 
-HOST = 'http://doszhan.space'
+HOST = 'https://doszhan.space'
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
