@@ -129,7 +129,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 THUMBNAIL_ALIASES = {
     '':
         {
-            'my_certs_page': {'size': (182, 129), 'crop': 'smart'}
+            'my_certs_page': {'size': (182, 129), 'crop': 'smart'},
+            'select_certs_page': {'size': (210, 150), 'crop': 'smart'}
         }
 }
 
@@ -170,7 +171,7 @@ try:
     EMAIL_USE_TLS = True
     with open(os.path.join(BASE_DIR, 'secret/ADMINS.txt'), 'r') as token:
         admins = token.read()
-    ADMINS = [('Dos', 'dos891@mail.ru'),]
+    ADMINS = [('Admin', 'admin777@mail.ru'),] # Написать email администратора, для отправки сообщении при ошибках
     SERVER_EMAIL = email
     DEFAULT_FROM_EMAIL = email  # Используется для отправки email после регистрации
     EMAIL_SUBJECT_PREFIX = '[Mosert] '

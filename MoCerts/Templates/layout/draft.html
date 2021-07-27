@@ -151,21 +151,6 @@
     </div>
 </div>
 
-<a href="https://t.me/share?url={{ cert.get_url_for_messengers }}" target="_blank">
-    <div class="telegram-share"></div>
-</a>
-<a href="https://www.whatsapp.com/?lang=ru" target="_blank"
-    data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-    <div class="whatsapp-share"></div>
-</a>
-<a href="https://www.facebook.com/sharer/sharer.php?u={{ cert.get_url_for_messengers }}" target="_blank">
-    <div class="facebook-share"></div>
-</a>
-<a href="https://www.instagram.com" target="_blank"
-    data-url="{% url 'certificate' number=cert.number %}" onclick="CopyUrl(this)">
-    <div class="instagram-share"></div>
-</a>
-<a href="https://mail.ru/" target="_blank" data-url="{% url 'certificate' number=cert.number %}"
-    onclick="CopyUrl(this)">
-    <div class="mail-share"></div>
+<a href="{% url 'create_certificate' nominal=1 %}">
+    <img src="{% static 'img/sert-1.png' %}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="">
 </a>

@@ -5,9 +5,8 @@ from django.contrib.auth.models import AbstractUser
 from MoCerts.settings import HOST
 
 
-
 class CustomUser(AbstractUser):
-    ''''кастомный юзер'''
+    ''''расширение модели пользователя'''
     photo = models.ImageField(
         upload_to='accounts/image/%Y/%m/%d', blank=True, verbose_name='Аватарка')
     certificate = models.ForeignKey('Certificate', on_delete=models.SET_NULL, null=True, blank=True)
@@ -67,6 +66,7 @@ class Certificate(models.Model):
 
 
 class PreviewSettings(models.Model):
+    '''модель настройки превью страниц'''
     type = models.CharField(max_length=255, default='website', verbose_name='Тип приложения',)
     site_name = models.CharField(max_length=255, default='MoCert', verbose_name='Название сайта',)
     title = models.CharField(max_length=255, default='Заработай вместе с нами', verbose_name='Заголовок',)
@@ -74,9 +74,10 @@ class PreviewSettings(models.Model):
                 verbose_name='Описание',)
     locale = models.CharField(max_length=255, default='ru', verbose_name='Локаль',)
     twitter_creator = models.CharField(max_length=255, default='@MonteCarlo', verbose_name='twitter_creator',)
-    url = models.URLField(max_length=255, default=HOST, verbose_name='Ссылка на сайт',)
-    image = models.URLField(max_length=255, default=HOST + '/media/2607211245970578.png', verbose_name='Ссылка на картинку',)
-
+    url = models.URLField(max_length=255, default=HOST, verbose_name='Ссылка на сайт', 
+                        help_text='Данное поле для всех страниц. Для сертификатов подставляется свой url')
+    image = models.URLField(max_length=255, default=HOST + '/media/2607211245970578.png', verbose_name='Ссылка на картинку',
+                        help_text='Данное поле для всех страниц. Для сертификатов подставляется своя картинка',)
 
     class Meta:
         verbose_name = 'Настройки превью'
@@ -85,3 +86,9 @@ class PreviewSettings(models.Model):
     def __str__(self):
         '''Строковое отображени'''
         return f'{self.site_name}'
+
+
+class PreviewSettings(models.Model):
+    index_number = models.PositiveIntegerField(verbose_name='порядковый номер на странице',)
+    title = models.CharField(max_length=255, verbose_name='Заголовок',)
+    

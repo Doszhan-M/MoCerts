@@ -22,7 +22,7 @@
     <div class="documents-wrap">
         <div class="documents-item">
             <a href="{% url 'create_certificate' nominal=1 %}">
-                <img src="{% static 'img/sert-1.png' %}" alt="">
+                <img src="{% static 'img/sert-1.png' %}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="">
             </a>
         </div>
         <div class="documents-item">
@@ -62,4 +62,5 @@
         </div>
     </div>
 </div>
+
 {% endblock %}
