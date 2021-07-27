@@ -17,11 +17,16 @@ class UserAdmin(admin.ModelAdmin):
     list_filter = ('real_account', 'balance',)
     search_fields = ('first_name', 'email', 'real_account', 'balance', 'telegram_id',)
 
+class ManualAdmin(admin.ModelAdmin):
+    list_display = ('index_number', 'title',)
+    list_display_links = ('index_number', 'title',)
+    ordering = ['index_number']
+
 
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Certificate, CertAdmin)
 admin.site.register(PreviewSettings)
-admin.site.register(ManualPosts)
+admin.site.register(ManualPosts, ManualAdmin)
 
 
 admin.site.site_title = 'Панель администратора'
