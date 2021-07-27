@@ -9,7 +9,7 @@ from django.urls import reverse_lazy, reverse
 from django.conf import settings
 
 from .forms import MyLoginForm, MySignupForm
-from .models import CustomUser, Certificate
+from .models import CustomUser, Certificate, ManualPosts
 
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
@@ -38,8 +38,10 @@ class UserProfile(LoginRequiredMixin, TemplateView):
         return context
 
 
-class ManualView(TemplateView):
+class ManualView(ListView):
     '''Страница инструкции'''
+    model = ManualPosts
+    context_object_name = 'manuals'
     template_name = 'MainApp/manual.html'
 
 

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Certificate, PreviewSettings
+from .models import CustomUser, Certificate, PreviewSettings, ManualPosts
 
 
 class CertAdmin(admin.ModelAdmin):
@@ -21,6 +21,7 @@ class UserAdmin(admin.ModelAdmin):
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Certificate, CertAdmin)
 admin.site.register(PreviewSettings)
+admin.site.register(ManualPosts)
 
 
 admin.site.site_title = 'Панель администратора'

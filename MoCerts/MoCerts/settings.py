@@ -36,6 +36,7 @@ INSTALLED_APPS = [
 
     'easy_thumbnails',
     'modeltranslation',
+    'embed_video',
 
     'allauth',
     'allauth.account',
@@ -75,6 +76,10 @@ TEMPLATES = [
         },
     },
 ]
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.core.context_processors.request',
+)
 
 WSGI_APPLICATION = 'MoCerts.wsgi.application'
 
