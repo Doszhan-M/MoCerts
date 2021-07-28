@@ -230,7 +230,7 @@
     </footer>
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="{% static 'js/script.js' %}"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
     <script src="{% static 'js/main.js' %}" defer></script>
     <script src="/static/js/bootstrap.bundle.min.js"
@@ -240,32 +240,6 @@
     {% block script %}
     {% endblock script%}
 </body>
-
-<script>
-    window.addEventListener('load', init, false);
-    function init(e) {
-        let profile_photo = document.getElementsByClassName('profile-photo');
-        if (profile_photo) {
-            profile_photo[0].addEventListener('click', addPhoto, false);
-        }
-        let input_photo = document.getElementById('id_profile_photo');
-        input_photo.addEventListener('change', changePhoto, false);
-    }
-    function addPhoto(e) {
-        let input_photo = document.getElementById('id_profile_photo');
-        input_photo.click();
-    }
-    function changePhoto(e) {
-        let input_photo = document.getElementById('id_profile_photo');
-        let profile_photo_img = document.getElementsByClassName('profile-photo_img')[0]
-        let reader = new FileReader();
-
-        reader.onload = function (e) {
-            profile_photo_img.src = e.target.result;
-        };
-        reader.readAsDataURL(input_photo.files[0]);
-    }
-</script>
 
 </html>
 

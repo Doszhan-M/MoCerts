@@ -123,8 +123,10 @@ class ManualPosts(models.Model):
 
 
 class MainPagePost(models.Model):
-    headline = models.CharField(max_length=255, null=False,
-                                verbose_name=pgettext_lazy('Заголовок', 'Заголовок'))
+    headline = models.CharField(max_length=36, null=False, verbose_name=pgettext_lazy('Заголовок', 'Заголовок'),
+                            help_text='максимум 36 символов')
+    subtitle = models.CharField(max_length=131, null=False,
+                                verbose_name=pgettext_lazy('Подзаголовок', 'Подзаголовок'))
     date_create = models.DateTimeField(auto_now_add=True, verbose_name=pgettext_lazy(
         'Дата публикации', 'Дата публикации'))
     content = RichTextField(blank=True, null=True,)
