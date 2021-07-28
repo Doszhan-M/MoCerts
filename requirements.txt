@@ -1,0 +1,8 @@
+colorama==0.4.4
+Django==3.2.5
+django-allauth==0.45.0
+django-ckeditor==6.1.0
+django-embed-video==1.4.0
+django-modeltranslation==0.17.3
+easy-thumbnails==2.7.1
+Pillow==8.3.1
