@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import CustomUser, Certificate, PreviewSettings, ManualPosts
+from .models import CustomUser, Certificate, PreviewSettings, ManualPosts, MainPagePost
 
 
 class CertAdmin(admin.ModelAdmin):
@@ -22,11 +22,17 @@ class ManualAdmin(admin.ModelAdmin):
     list_display_links = ('index_number', 'title',)
     ordering = ['index_number']
 
+class MainPagePostAdmin(admin.ModelAdmin):
+    list_display = ('headline', 'date_create',)
+    list_display_links = ('headline',)
+    ordering = ['date_create']
+
 
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Certificate, CertAdmin)
 admin.site.register(PreviewSettings)
 admin.site.register(ManualPosts, ManualAdmin)
+admin.site.register(MainPagePost, MainPagePostAdmin)
 
 
 admin.site.site_title = 'Панель администратора'

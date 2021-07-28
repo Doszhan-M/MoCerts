@@ -9,7 +9,7 @@ from django.urls import reverse_lazy, reverse
 from django.conf import settings
 
 from .forms import MyLoginForm, MySignupForm
-from .models import CustomUser, Certificate, ManualPosts
+from .models import CustomUser, Certificate, ManualPosts, MainPagePost
 
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
@@ -18,8 +18,20 @@ import logging
 logger = logging.getLogger(__name__)
 
 
-class MainView(FormView):
+class AuthorizationForms(FormView):
+    """формы для авторизации и регистрации через header"""
+    form_class = MyLoginForm
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['SignupForm'] = MySignupForm  # форма регистрации
+        return context
+
+
+class MainView(AuthorizationForms, ListView):
     '''Главная страница'''
+    model = MainPagePost
+    context_object_name = 'posts'
     template_name = 'MainApp/index.html'
     form_class = MyLoginForm
 
@@ -41,12 +53,13 @@ class UserProfile(LoginRequiredMixin, TemplateView):
         return context
 
 
-class ManualView(ListView):
+class ManualView(AuthorizationForms, ListView):
     '''Страница инструкции'''
     model = ManualPosts
     context_object_name = 'manuals'
     template_name = 'MainApp/manual.html'
     ordering = 'index_number'
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -55,12 +68,12 @@ class ManualView(ListView):
         return context
 
 
-class SelectCertificate(TemplateView):
+class SelectCertificate(AuthorizationForms, TemplateView):
     '''Страница выбора сертификата'''
     template_name = 'MainApp/select_certificate.html'
 
 
-class CertificateDetail(DetailView):
+class CertificateDetail(AuthorizationForms, DetailView):
     model = Certificate
     slug_field = "number"
     slug_url_kwarg = "number"
@@ -108,10 +121,6 @@ class MyCertificates(LoginRequiredMixin, ListView):
         queryset = [x for x in queryset if x]
         return queryset
     
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        return context
-
    
 @login_required
 def create_certificate(request, nominal):
