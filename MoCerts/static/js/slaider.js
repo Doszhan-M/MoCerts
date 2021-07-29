@@ -21,7 +21,8 @@ window.addEventListener('load', () => {
         slaider.style.transform = 'translateY(' + `${(-stepSize) * counter -15}px)`;
     }
 
-    setInterval(() => autoSlider(), 3000)
+    // таймер для авто слайда
+    setInterval(() => autoSlider(), 4000)
 
     btnRight.addEventListener('click', () => {
         autoSlider()

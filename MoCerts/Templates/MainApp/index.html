@@ -25,7 +25,7 @@
                                 {{ post.headline }}
                             </h5>
                             <p class="main__article--text">{{ post.subtitle }}</p>
-                            <a href="#" class="main__article--more">читать...</a>
+                            <a href="{% url 'postdetail' pk=post.id %}" class="main__article--more">читать...</a>
                         </div>
                     </article>
                     {% endfor %}

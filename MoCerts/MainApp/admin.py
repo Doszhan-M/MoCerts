@@ -23,9 +23,9 @@ class ManualAdmin(admin.ModelAdmin):
     ordering = ['index_number']
 
 class MainPagePostAdmin(admin.ModelAdmin):
-    list_display = ('headline', 'date_create',)
+    list_display = ('headline', 'id', 'date_create',)
     list_display_links = ('headline',)
-    ordering = ['date_create']
+    ordering = ['-date_create']
 
 
 admin.site.register(CustomUser, UserAdmin)

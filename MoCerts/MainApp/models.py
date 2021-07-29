@@ -129,7 +129,7 @@ class MainPagePost(models.Model):
                                 verbose_name=pgettext_lazy('Подзаголовок', 'Подзаголовок'))
     date_create = models.DateTimeField(auto_now_add=True, verbose_name=pgettext_lazy(
         'Дата публикации', 'Дата публикации'))
-    content = RichTextField(blank=True, null=True,)
+    content = RichTextField(blank=True, null=True, verbose_name=pgettext_lazy('Содержание', 'Содержание'))
 
     class Meta:
         verbose_name = 'Статья'

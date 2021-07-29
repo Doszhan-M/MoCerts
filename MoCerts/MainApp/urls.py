@@ -1,10 +1,11 @@
 from django.urls import path
 from .views import MainView, UserProfile, ManualView, SelectCertificate, create_certificate, MyCertificates,\
-     CertificateDetail, accept, pay_certificate
+     CertificateDetail, PostDetail, accept, pay_certificate
 
 
 urlpatterns = [
     path('', MainView.as_view(), name='main_page'),
+    path('<int:pk>', PostDetail.as_view(), name='postdetail'),
     path('profile/', UserProfile.as_view(), name='profile'),
     path('manual/', ManualView.as_view(), name='manual'),
 

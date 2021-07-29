@@ -1,4 +1,5 @@
 from datetime import datetime
+import logging
 
 from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,12 +9,10 @@ from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
 from django.urls import reverse_lazy, reverse
 from django.conf import settings
 
-from .forms import MyLoginForm, MySignupForm
-from .models import CustomUser, Certificate, ManualPosts, MainPagePost
-
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
-import logging
+from .forms import MyLoginForm, MySignupForm
+from .models import CustomUser, Certificate, ManualPosts, MainPagePost
 
 logger = logging.getLogger(__name__)
 
@@ -32,13 +31,15 @@ class MainView(AuthorizationForms, ListView):
     '''Главная страница'''
     model = MainPagePost
     context_object_name = 'posts'
+    ordering = ('-id')
     template_name = 'MainApp/index.html'
-    form_class = MyLoginForm
 
-    def get_context_data(self, **kwargs):
-        context = super(MainView, self).get_context_data(**kwargs)
-        context['SignupForm'] = MySignupForm  # форма регистрации
-        return context
+
+class PostDetail(AuthorizationForms, DetailView):
+    '''Страница поста подробнее'''
+    model = MainPagePost
+    context_object_name = 'post'
+    template_name = 'MainApp/postdetail.html'
 
 
 class UserProfile(LoginRequiredMixin, TemplateView):
@@ -60,12 +61,11 @@ class ManualView(AuthorizationForms, ListView):
     template_name = 'MainApp/manual.html'
     ordering = 'index_number'
 
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        if not self.request.is_secure():
-            logger.error(f'self.request.is_secure() {self.request.is_secure()}')
-        return context
+    # def get_context_data(self, **kwargs):
+    #     context = super().get_context_data(**kwargs)
+    #     if not self.request.is_secure():
+    #         logger.error(f'self.request.is_secure() {self.request.is_secure()}')
+    #     return context
 
 
 class SelectCertificate(AuthorizationForms, TemplateView):
