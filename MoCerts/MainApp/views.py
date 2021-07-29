@@ -31,7 +31,7 @@ class MainView(AuthorizationForms, ListView):
     '''Главная страница'''
     model = MainPagePost
     context_object_name = 'posts'
-    ordering = ('-id')
+    ordering = ('-date_create')
     template_name = 'MainApp/index.html'
 
 
