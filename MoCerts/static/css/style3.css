@@ -1,3 +1,4 @@
+
 .main {
     min-height: calc(100vh - 118px);
 }
@@ -10,8 +11,8 @@
 }
 
 .register {
-    font-family: Georgia, sans-serif;
-    color: #dba95e;
+    font-family: "Mon Amour", sans-serif;
+    color: #e29c32;
     font-weight: bold;
 }
 
@@ -83,3 +84,5 @@
     margin-left: 7%;
     width: 80%;
 }
+
+

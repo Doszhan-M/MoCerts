@@ -59,7 +59,13 @@
 </head>
 
 <body class="common">
-
+    <!-- video fon -->
+    <div id="video-bg">
+        <video width="100%" height="auto" preload="auto" autoplay="autoplay"
+        loop="loop" poster="{% static 'img/sea-stock-poster.png' %}">
+            <source src="{% static 'img/bg_video.mp4' %}" type="video/mp4">
+        </video>
+    </div>
     <!-- Registration -->
     {% include 'layout/base_register.html' %}
 
@@ -80,7 +86,7 @@
                 <a href="{% url 'main_page' %}"><img src="{% static 'img/logo.webp' %}" alt="Logotype"></a>
             </div>
             {% if user.is_authenticated %}
-            <a href="#" style="text-decoration: none;">
+            <a href="{% url 'profile' %}" style="text-decoration: none;">
                 <span class="header__reg">{{ user.first_name }} {{ user.last_name }}</span>
             </a>
             <div class="header__avatar">
@@ -128,11 +134,6 @@
                     </li>
                 </ul>
             </div>
-            {% if user.is_authenticated %}
-            <a style="text-decoration: none;" href="{% url 'account_logout' %}">
-                <span class="header__reg" style="font-size:medium;">{% trans 'Logout' %}</span>
-            </a>
-            {% endif %}
         </div>
 
         <img src="{% static 'img/koners_right.webp' %}" class="header__right--koners koners" alt="Koners">
@@ -142,15 +143,9 @@
     <section class="nav" id="nav">
         <nav class="main__nav">
             <ul class="main__nav--ul">
-                {% if user.is_authenticated %}
                 <li class="main__nav--item">
-                    <a href="{% url 'profile' %}" style="text-decoration: none;">{% trans 'Личный кабинет' %}</a>
+                    <a href="{% url 'main_page' %}" style="text-decoration: none;">{% trans 'В начало' %}</a>
                 </li>
-                {% else %}
-                <li class="main__nav--item">
-                    <a href="{% url 'main_page' %}" style="text-decoration: none;">{% trans 'Home' %}</a>
-                </li>
-                {% endif %}
                 <li class="main__nav--item">
                     <a href="{% url 'select_certificate' %}" style="text-decoration: none;">
                         {% trans 'Выбрать сертификат' %}
@@ -197,12 +192,10 @@
     <footer class="footer" id="footer">
         <div class="footer__container">
             <section class="footer__contact">
-                <p style="line-height: 0.7;">АО MoCersts ®</p>
-                <p style="line-height: 0.7;">{% trans 'г. Новосибирск, 630007' %}</p>
-                <p style="line-height: 0.7;">{% trans 'Железнодорожный район,' %}</p>
-                <p style="margin-bottom: 9px; line-height: 0.7;"><u>{% trans '​Советская, 5​1' %}</u>{% trans ' офис
-                    506' %}
-                </p>
+                <p>АО MoCersts ®</p>
+                <p>г. Новосибирск, 630007</p>
+                <p>Железнодорожный район,</p>
+                <p style="margin-bottom: 9px;"><u>​Советская, 5​1</u> офис 506</p>
             </section>
             <section class="footer__number">
                 <img src="{% static 'img/number_poster.png' %}" alt="Poster" class="footer__number--img">
@@ -210,27 +203,27 @@
             </section>
             <section class="footer__social">
                 <div class="footer__social--icons">
-                    <a href="https://t.me/mocerts"><img src="{% static 'img/crown.webp' %}" alt="Crown"></a>
-                    <a href="https://t.me/cashriser"><img src="{% static 'img/mc.webp' %}" alt="mc"></a>
-                    <a href="https://t.me/mocertsbot"><img src="{% static 'img/bot.webp' %}" alt="Bot"></a>
-                    <a href="https://instagram.com/mocerts"><img src="{% static 'img/insta.webp' %}"
+                    <a class="crown_img" href="https://t.me/mocerts"><img src="{% static 'img/crown.webp' %}" alt="Crown"></a>
+                    <a class="first_img" href="https://t.me/cashriser"><img src="{% static 'img/mc.webp' %}" alt="mc"></a>
+                    <a class="first_img" href="https://t.me/mocertsbot"><img src="{% static 'img/bot.webp' %}" alt="Bot"></a>
+                    <a class="first_img" href="https://instagram.com/mocerts"><img src="{% static 'img/insta.webp' %}"
                             alt="Instagram"></a>
-                    <a href="https://facebook.com/mocerts"><img src="{% static 'img/fb.webp' %}" alt="Facebook"></a>
+                    <a class="first_img" href="https://facebook.com/mocerts"><img src="{% static 'img/fb.webp' %}" alt="Facebook"></a>
                 </div>
                 <p>{% trans '© 2021 СЧАСТЬЕ ЕСТЬ. и оно уже БЛИЗКО!!! MoCerts.com' %}</p>
             </section>
             <section class="footer__contact">
-                <p style="line-height: 0.7;">Certificate of Financial state</p>
-                <p style="line-height: 0.7;">№1604-21</p>
-                <p style="line-height: 0.7;">from 15.05.2021 y.</p>
-                <p class="edit__text" style="line-height: 0.7;">admin@mocerts.com &nbsp;</p>
+                <p>Certificate of Financial state</p>
+                <p>№1604-21</p>
+                <p>from 15.05.2021 y.</p>
+                <p class="edit__text">admin@mocerts.com &nbsp;</p>
             </section>
         </div>
         <p class="footer__happy">{% trans '© 2021 СЧАСТЬЕ ЕСТЬ. и оно уже БЛИЗКО!!! MoCerts.com' %}</p>
     </footer>
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-
+    <script src="{% static 'js/script.js' %}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" defer></script>
     <script src="{% static 'js/main.js' %}" defer></script>
     <script src="/static/js/bootstrap.bundle.min.js"
