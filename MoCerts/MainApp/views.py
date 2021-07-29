@@ -11,7 +11,7 @@ from django.conf import settings
 
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
-from .forms import MyLoginForm, MySignupForm
+from .forms import MyLoginForm, MySignupForm, UserForm
 from .models import CustomUser, Certificate, ManualPosts, MainPagePost
 
 logger = logging.getLogger(__name__)
@@ -42,16 +42,18 @@ class PostDetail(AuthorizationForms, DetailView):
     template_name = 'MainApp/postdetail.html'
 
 
-class UserProfile(LoginRequiredMixin, TemplateView):
+class UserProfile(LoginRequiredMixin, UpdateView):
     """кабинет пользователя"""
     model = CustomUser
+    context_object_name = 'user'
     template_name = 'MainApp/profile.html'
+    form_class = UserForm
+    success_url = reverse_lazy('profile')
     login_url = '/accounts/login/'
 
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['user'] = CustomUser.objects.get(email=self.request.user.email)
-        return context
+    def get_object(self,):
+        obj = CustomUser.objects.get(first_name=self.request.user)
+        return obj
 
 
 class ManualView(AuthorizationForms, ListView):

@@ -2,7 +2,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: "mon";
-    background:  url(../img/bg_5.jpg) center center/cover no-repeat;
+    background:  url(../img/sea-stock-poster.png) no-repeat;
 }
 
 @font-face {
@@ -876,4 +876,47 @@ a.registration {
 
 .modal-body {
     padding: 0rem !important;;
+}
+
+.profile_main {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    min-height: calc(100vh - 118px);
+
+}
+
+.profile_block {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'mon';
+    font-weight: 700;
+    color: #2d2e2a;
+    font-size: 26px;
+    
+}
+
+.profile_form {
+    width: 75%;
+    display: flex;
+    justify-content: space-between;
+    
+    
+}
+
+.profile_form img {
+    width: 200px;
+    height: 200px;
+}
+
+.profile_form form {
+ 
+}
+
+.profile_form form p {
+    display: flex;
+    justify-content: space-between;
+    align-content: flex-end;
 }

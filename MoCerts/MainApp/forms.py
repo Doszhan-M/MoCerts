@@ -1,5 +1,5 @@
 from allauth.account.forms import LoginForm, SignupForm
-from django.forms import ModelForm, TextInput, CharField
+from django.forms import ModelForm, TextInput, CharField, EmailInput, FileInput
 from .models import CustomUser
 
 
@@ -24,3 +24,42 @@ class MySignupForm(SignupForm, ModelForm):
     def save(self, request):
         user = super(MySignupForm, self).save(request)
         return user
+
+
+class UserForm(ModelForm):
+    """Модельная форма редактировать профиль"""
+
+    class Meta:
+        model = CustomUser
+
+        fields = ['first_name', 'last_name', 'email', 'photo', ]
+
+        labels = {'first_name': 'Имя',
+                    'last_name': 'Фамилия', 'email': 'Email', 'photo': 'Аватар', }
+
+        widgets = {
+            # 'username': TextInput(attrs={
+            #     'class': 'form-control',
+            #     'readonly': 'readonly',
+            #     'style': 'width:40ch ',
+            # }),
+            'first_name': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите текст...',
+                'style': 'width:20ch; background-color: transparent; border: none; font-size: 22px;',
+            }),
+            'last_name': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите текст...',
+                'style': 'width:20ch; background-color: transparent; border: none; font-size: 22px;',
+            }),
+            'email': EmailInput(attrs={
+                'multiple class': 'form-control',
+                'style': 'width:20ch; background-color: transparent; border: none; font-size: 22px;',
+            }),
+            'photo': FileInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Выберите рисунок',
+                'style': 'width:30ch; background-color: transparent; border: none; font-size: 19px;',
+            }),
+        }

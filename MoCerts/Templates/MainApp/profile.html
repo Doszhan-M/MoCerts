@@ -14,43 +14,27 @@
 {% endblock %}
 
 {% block content %}
-<div class="main">
-    <div class="custom_wrap custom_font">
-        <h2 style="text-align: center; margin-top:-3%">Кабинет пользователя</h2><br>
-        <div class="profile_board">
-            <div class="profile_photo">
-                {% if user.photo %}
-                <img src="{{ user.photo.url }}" width="200">
-                {% else %}
-                <a href="#">Загрузите <br> фото</a>
-                {% endif %}
-            </div>
-            <div style="width: 70%;">
-                <div class="profile_data">
-                    <p class="td_left">{% trans "Имя" %}</p>
-                    <p class="td_right">{{user.first_name}}</p>
-                </div>
-                <div class="profile_data">
-                    <p class="td_left">{% trans "Фамилия" %}</p>
-                    <p class="td_right">{{user.last_name}}</p>
-                </div>
-                <div class="profile_data">
-                    <p class="td_left">{% trans "Почта" %}</p>
-                    <p class="td_right">{{user.email}}</p>
-                </div>
-                <div class="profile_data">
-                    <p class="td_left">{% trans "Баланс" %}</p>
-                    <p class="td_right">0$</p>
-                </div>
-            </div>
-        </div><br>
-        <div class="main__nav--item" style="width: 20%;">
-            <a style="position: relative;top: -10px; color: #dba95e;" class="btn" href="#">
-                Редактировать профиль
-            </a>
-            
-        </div>
-    </div>
 
+<div class="profile_main">
+    <div class="profile_block">
+        <h2>Ваш профиль</h2><br>
+        <div class="profile_form">
+            {% if user.photo %}
+            <img src="{{ user.photo.url }}" alt="ava">
+            {% else %}
+            {% endif %}
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <p><span>Имя:</span><span>{{ form.first_name }}</span></p>
+                <p><span>Фамилия:</span><span>{{ form.last_name }}</span></p>
+                <p><span>Email:</span><span>{{ form.email }}</span></p>
+                <p>{{ form.photo}}</p>
+                <input type="submit" class="" value="Изменить">
+            </form>
+        </div>
+        <a style="text-decoration: none;" href="{% url 'account_logout' %}">
+            <span class="" style="font-size:medium;">{% trans 'Logout' %}</span>
+        </a>
+    </div>
 </div>
 {% endblock content%}
