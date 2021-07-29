@@ -895,11 +895,14 @@ a.registration {
     font-weight: 700;
     color: #2d2e2a;
     font-size: 26px;
-    
+}
+
+.profile_block h1{
+    margin: 2% 0% 3%;
 }
 
 .profile_form {
-    width: 75%;
+    width: 70%;
     display: flex;
     justify-content: space-between;
     
@@ -919,4 +922,13 @@ a.registration {
     display: flex;
     justify-content: space-between;
     align-content: flex-end;
+}
+
+.profile_form form input {
+    margin-bottom: 1%;
+}
+
+.profile_btn {
+    font-size: 19px;
+    color: #dba95e;
 }

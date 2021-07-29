@@ -17,24 +17,24 @@
 
 <div class="profile_main">
     <div class="profile_block">
-        <h2>Ваш профиль</h2><br>
+        <h1>Ваш профиль</h1>
         <div class="profile_form">
             {% if user.photo %}
             <img src="{{ user.photo.url }}" alt="ava">
             {% else %}
+            <img src="{% static 'img/profile.png' %}" alt="ava">
             {% endif %}
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <p><span>Имя:</span><span>{{ form.first_name }}</span></p>
                 <p><span>Фамилия:</span><span>{{ form.last_name }}</span></p>
                 <p><span>Email:</span><span>{{ form.email }}</span></p>
-                <p>{{ form.photo}}</p>
-                <input type="submit" class="" value="Изменить">
+                <p><span>Баланс:</span><span>{{ form.balance }}</span></p>
+                <p class="main__nav--item">{{ form.photo}}</p>
+                <input type="submit" class="main__nav--item profile_btn" value="Изменить">
+                <input type="submit" class="main__nav--item profile_btn" value="Выйти">
             </form>
         </div>
-        <a style="text-decoration: none;" href="{% url 'account_logout' %}">
-            <span class="" style="font-size:medium;">{% trans 'Logout' %}</span>
-        </a>
     </div>
 </div>
 {% endblock content%}

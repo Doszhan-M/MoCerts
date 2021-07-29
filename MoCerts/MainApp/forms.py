@@ -32,7 +32,7 @@ class UserForm(ModelForm):
     class Meta:
         model = CustomUser
 
-        fields = ['first_name', 'last_name', 'email', 'photo', ]
+        fields = ['first_name', 'last_name', 'email', 'photo', 'balance',]
 
         labels = {'first_name': 'Имя',
                     'last_name': 'Фамилия', 'email': 'Email', 'photo': 'Аватар', }
@@ -59,7 +59,11 @@ class UserForm(ModelForm):
             }),
             'photo': FileInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Выберите рисунок',
-                'style': 'width:30ch; background-color: transparent; border: none; font-size: 19px;',
+                'style': 'width:30ch; border: none; font-size: 19px;',
+            }),
+            'balance': TextInput(attrs={
+                'class': 'form-control',
+                'placeholder': 'Введите текст...',
+                'style': 'width:20ch; background-color: transparent; border: none; font-size: 22px;',
             }),
         }
