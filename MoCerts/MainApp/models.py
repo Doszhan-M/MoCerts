@@ -4,7 +4,7 @@ from django.contrib.auth.models import AbstractUser
 from embed_video.fields import EmbedVideoField
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext_lazy
-from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
 
 from MoCerts.settings import HOST
 
@@ -129,7 +129,7 @@ class MainPagePost(models.Model):
                                 verbose_name=pgettext_lazy('Подзаголовок', 'Подзаголовок'))
     date_create = models.DateTimeField(auto_now_add=True, verbose_name=pgettext_lazy(
         'Дата публикации', 'Дата публикации'))
-    content = RichTextField(blank=True, null=True, verbose_name=pgettext_lazy('Содержание', 'Содержание'))
+    content =  RichTextUploadingField(blank=True, null=True, verbose_name=pgettext_lazy('Содержание', 'Содержание'))
 
     class Meta:
         verbose_name = 'Статья'
@@ -141,4 +141,4 @@ class MainPagePost(models.Model):
 
     def get_absolute_url(self):
         """получить ссылку на объект"""
-        return reverse('manual',)
+        return reverse('postdetail', kwargs={'pk': self.id})

@@ -7,6 +7,7 @@ from django.conf.urls.static import static # нужно прописать пу�
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path('ckeditor/', include('ckeditor_uploader.urls')),
     path('', include('MainApp.urls')),
 ]
 
