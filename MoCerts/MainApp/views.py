@@ -54,7 +54,11 @@ class UserProfile(LoginRequiredMixin, UpdateView):
     def get_object(self,):
         obj = CustomUser.objects.get(first_name=self.request.user)
         return obj
-
+    
+    def post(self, request: HttpRequest, *args: str, **kwargs) -> HttpResponse:
+        messages.add_message(
+                self.request, messages.INFO, 'Изменения сохранены')
+        return super().post(request, *args, **kwargs)
 
 class ManualView(AuthorizationForms, ListView):
     '''Страница инструкции'''

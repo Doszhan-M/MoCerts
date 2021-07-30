@@ -20,45 +20,50 @@
 </div>
 <div class="container">
     <div class="documents-wrap">
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=1 %}">
-                <img src="{% static 'img/sert-1.png' %}" width="{{ thumb.width }}" height="{{ thumb.height }}" alt="">
-            </a>
+        <div class="certificate_row">
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=1 %}">
+                    <img src="{% static 'img/sert-1.png' %}" width="{{ thumb.width }}" height="{{ thumb.height }}"
+                        alt="">
+                </a>
+            </div>
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=5 %}">
+                    <img src="{% static 'img/sert-2.png' %}" alt="">
+                </a>
+            </div>
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=10 %}">
+                    <img src="{% static 'img/sert-3.png' %}" alt="">
+                </a>
+            </div>
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=20 %}">
+                    <img src="{% static 'img/sert-4.png' %}" alt="">
+                </a>
+            </div>
         </div>
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=5 %}">
-                <img src="{% static 'img/sert-2.png' %}" alt="">
-            </a>
-        </div>
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=10 %}">
-                <img src="{% static 'img/sert-3.png' %}" alt="">
-            </a>
-        </div>
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=20 %}">
-                <img src="{% static 'img/sert-4.png' %}" alt="">
-            </a>
-        </div>
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=50 %}">
-                <img src="{% static 'img/sert-5.png' %}" alt="">
-            </a>
-        </div>
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=100 %}">
-                <img src="{% static 'img/sert-6.png' %}" alt="">
-            </a>
-        </div>
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=200 %}">
-                <img src="{% static 'img/sert-7.png' %}" alt="">
-            </a>
-        </div>
-        <div class="documents-item">
-            <a href="{% url 'create_certificate' nominal=500 %}">
-                <img src="{% static 'img/sert-8.png' %}" alt="">
-            </a>
+        <div class="certificate_row">
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=50 %}">
+                    <img src="{% static 'img/sert-5.png' %}" alt="">
+                </a>
+            </div>
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=100 %}">
+                    <img src="{% static 'img/sert-6.png' %}" alt="">
+                </a>
+            </div>
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=200 %}">
+                    <img src="{% static 'img/sert-7.png' %}" alt="">
+                </a>
+            </div>
+            <div class="documents-item">
+                <a href="{% url 'create_certificate' nominal=500 %}">
+                    <img src="{% static 'img/sert-8.png' %}" alt="">
+                </a>
+            </div>
         </div>
     </div>
 </div>

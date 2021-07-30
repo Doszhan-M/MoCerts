@@ -38,11 +38,6 @@ class UserForm(ModelForm):
                     'last_name': 'Фамилия', 'email': 'Email', 'photo': 'Аватар', }
 
         widgets = {
-            # 'username': TextInput(attrs={
-            #     'class': 'form-control',
-            #     'readonly': 'readonly',
-            #     'style': 'width:40ch ',
-            # }),
             'first_name': TextInput(attrs={
                 'class': 'form-control',
                 'placeholder': 'Введите текст...',
@@ -63,7 +58,7 @@ class UserForm(ModelForm):
             }),
             'balance': TextInput(attrs={
                 'class': 'form-control',
-                'placeholder': 'Введите текст...',
+                'readonly': 'readonly',
                 'style': 'width:20ch; background-color: transparent; border: none; font-size: 22px;',
             }),
         }

@@ -1,6 +1,6 @@
 
 .main {
-    min-height: calc(100vh - 118px);
+    min-height: calc(100vh - 450px);
 }
 
 .custom_wrap {
@@ -60,7 +60,7 @@
 
 .post_main {
     width: 100%;
-    min-height: calc(100vh - 118px);
+    min-height: calc(100vh - 480px);
     display: flex;
     justify-content: center;
 }

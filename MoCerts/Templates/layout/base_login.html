@@ -12,7 +12,7 @@
                 <form action="{% url 'account_login' %}" method="post" enctype="multipart/form-data">
                     {% csrf_token %}
                     <img class="profile-photo_img" src="/static/img/register_bg.jpg" alt="" width="100%">
-                    <div align="center" style="position: absolute; top: 17%; left: 44%;">
+                    <div style="font-family: 'Mon'; position: absolute; top: 17%; left: 44%;">
                         <h3>{% trans 'Войти' %}</h3>
                     </div>
                     <div class="profile-data-register">
