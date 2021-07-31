@@ -142,3 +142,73 @@ class MainPagePost(models.Model):
     def get_absolute_url(self):
         """получить ссылку на объект"""
         return reverse('postdetail', kwargs={'pk': self.id})
+
+
+class QiwiSecretKey(models.Model):
+    '''модель QiwiToken'''
+
+    secret_key = models.CharField(max_length=255, default='Token', verbose_name=pgettext_lazy('secret_key', 'secret_key'))
+
+    class Meta:
+        verbose_name = 'Токен qiwi'
+        verbose_name_plural = 'Токен qiwi'
+
+    def __str__(self):
+        '''Строковое отображение'''
+        return f'{self.secret_key}'
+
+
+class Deposit(models.Model):
+    '''модель транзакции для пополнения'''
+
+    class StatusList(models.IntegerChoices):
+        PAID = 1, _('Оплачено')
+        WAIT = 2, _('В ожидании')
+        REJECT = 3, _('Отклонено')
+
+    bill_id = models.PositiveBigIntegerField(verbose_name=pgettext_lazy('id транзакции', 'id транзакции'),)
+    amount = models.PositiveIntegerField(verbose_name=pgettext_lazy('сумма', 'сумма'),)
+    lifetime = models.PositiveIntegerField(verbose_name=pgettext_lazy('время жизни счета', 'время жизни счета'),)
+    status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
+                                     related_name='deposit_by_user')
+    time = models.TimeField(auto_now_add=True, verbose_name='время создания',)
+
+    class Meta:
+        verbose_name = 'Пополнение'
+        verbose_name_plural = 'Пополнения'
+
+    def __str__(self):
+        '''Строковое отображение'''
+        return f'{self.bill_id}'
+
+    def get_absolute_url(self):
+        """получить ссылку на объект"""
+        return reverse('userbalance')
+
+
+class Withdrawal(models.Model):
+    '''модель транзакции для вывода средств'''
+
+    class StatusList(models.IntegerChoices):
+        PAID = 1, _('Исполнено')
+        WAIT = 2, _('В ожидании')
+        REJECT = 3, _('Отклонено')
+
+    user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
+                                     related_name='withdrawal_by_user')
+    amount = models.PositiveIntegerField(verbose_name=pgettext_lazy('сумма', 'сумма'),)
+    time = models.TimeField(auto_now_add=True, verbose_name='время создания',)
+    status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
+
+    class Meta:
+        verbose_name = 'Вывод средств'
+        verbose_name_plural = 'Вывод средств'
+
+    def __str__(self):
+        '''Строковое отображение'''
+        return f'{self.amount}'
+
+    def get_absolute_url(self):
+        """получить ссылку на объект"""
+        return reverse('userbalance')

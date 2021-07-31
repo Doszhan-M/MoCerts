@@ -1,0 +1,59 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_filters %}
+
+
+{% block property %}
+<meta property="og:url" content="{{ 'url'|property }}">
+<meta property="og:image" content="{{ 'image'|property }}">
+{% endblock property%}
+
+{% block title %}
+{% trans 'Пополнение и вывод средств' %} | Mocerts
+{% endblock %}
+
+
+{% block content %}
+
+<div class="profile_main">
+    <div class="deposit_block">
+
+        <div class="deposit">
+            <h1 class="deposit_title">Пополнить счет</h1>
+            <form class="withdrawal_form" action="">
+                <div class="deposit_form">
+                    <h2>Сумма пополнения</h2>
+                    <input type="text" placeholder="$">
+                </div>
+                <button class="deposit_button">Оплатить</button>
+
+            </form>
+
+        </div>
+
+        <div class="deposit">
+            <h1 class="deposit_title">Вывод средств</h1>
+            <form class="withdrawal_form" action="">
+                <div class="deposit_form">
+                    <h2>Сумма вывода</h2>
+                    <input type="text" placeholder="$">
+                </div>
+                <div class="deposit_form">
+                    <h2>Qiwi кошелек</h2>
+                    <input type="text" placeholder="номер кошелька">
+                </div>
+                <button class="deposit_button">Оставить заявку</button>
+            </form>
+        </div>
+
+        <div class="deposit">
+            <h1 class="deposit_title">История</h1>
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock content %}

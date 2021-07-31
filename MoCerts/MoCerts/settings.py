@@ -1,6 +1,6 @@
 import os
-from MoCerts.log_settings import log_settings
 from colorama import Fore, Style
+from MoCerts.log_settings import log_settings
 
 
 try:
@@ -22,6 +22,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.sites',
     'django.contrib.staticfiles',
+    
+    'MainApp',
 
     'easy_thumbnails',
     'modeltranslation',
@@ -36,7 +38,6 @@ INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.facebook',
     # 'allauth.socialaccount.providers.instagram',
 
-    'MainApp',
 ]
 
 MIDDLEWARE = [

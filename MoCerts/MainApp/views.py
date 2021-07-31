@@ -12,9 +12,23 @@ from django.conf import settings
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
 from .forms import MyLoginForm, MySignupForm, UserForm
+from .qiwi import QIWISECRET_KEY
 from .models import CustomUser, Certificate, ManualPosts, MainPagePost
 
 logger = logging.getLogger(__name__)
+
+
+class UserBalance(LoginRequiredMixin, TemplateView):
+    """страница баланса"""
+    template_name = 'MainApp/userbalance.html'
+    success_url = reverse_lazy('profile')
+    login_url = '/accounts/login/'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(QIWISECRET_KEY)
+        # context['SignupForm'] = MySignupForm  # форма регистрации
+        return context
 
 
 class AuthorizationForms(FormView):
@@ -59,6 +73,7 @@ class UserProfile(LoginRequiredMixin, UpdateView):
         messages.add_message(
                 self.request, messages.INFO, 'Изменения сохранены')
         return super().post(request, *args, **kwargs)
+
 
 class ManualView(AuthorizationForms, ListView):
     '''Страница инструкции'''
@@ -126,8 +141,8 @@ class MyCertificates(LoginRequiredMixin, ListView):
                     queryset[nominals.index(i)].append(cert)
         queryset = [x for x in queryset if x]
         return queryset
-    
-   
+
+
 @login_required
 def create_certificate(request, nominal):
     '''Создать сертификат'''

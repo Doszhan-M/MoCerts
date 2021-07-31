@@ -92,7 +92,7 @@
             <div class="header__avatar">
                 <a href="#"><img src="{% static 'img/avatar.webp' %}" alt="Avatar"></a>
             </div>
-            <a href="#" style="text-decoration: none;">
+            <a href="{% url 'userbalance' %}" style="text-decoration: none;">
                 <span class="header__sum">
                     {{ user.balance }}$
                 </span>

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import CustomUser, Certificate, PreviewSettings, ManualPosts, MainPagePost
+from .models import CustomUser, Certificate, PreviewSettings, ManualPosts, MainPagePost, \
+                    QiwiSecretKey, Deposit, Withdrawal
 
 
 class CertAdmin(admin.ModelAdmin):
@@ -11,16 +12,20 @@ class CertAdmin(admin.ModelAdmin):
 
 
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('first_name', 'email', 'real_account', 'balance', 'telegram_id',)
+    list_display = ('first_name', 'email', 'real_account',
+                    'balance', 'telegram_id',)
     list_display_links = ('first_name', 'email',)
     ordering = ['-real_account']
     list_filter = ('real_account', 'balance',)
-    search_fields = ('first_name', 'email', 'real_account', 'balance', 'telegram_id',)
+    search_fields = ('first_name', 'email', 'real_account',
+                     'balance', 'telegram_id',)
+
 
 class ManualAdmin(admin.ModelAdmin):
     list_display = ('index_number', 'title',)
     list_display_links = ('index_number', 'title',)
     ordering = ['index_number']
+
 
 class MainPagePostAdmin(admin.ModelAdmin):
     list_display = ('headline', 'id', 'date_create',)
@@ -28,11 +33,30 @@ class MainPagePostAdmin(admin.ModelAdmin):
     ordering = ['-date_create']
 
 
+class DepositAdmin(admin.ModelAdmin):
+    list_display = ('bill_id', 'amount', 'status', 'user', 'time',)
+    list_display_links = ('bill_id', 'amount', 'status',)
+    ordering = ['-time']
+    list_filter = ('status', 'user',)
+    search_fields = ('bill_id', 'amount', 'status', 'user', 'time',)
+
+    
+class WithdrawalAdmin(admin.ModelAdmin):
+    list_display = ('amount', 'status', 'user', 'time',)
+    list_display_links = ('amount', 'status',)
+    ordering = ['-time']
+    list_filter = ('status', 'user',)
+    search_fields = ('amount', 'status', 'user', 'time',)
+
+
 admin.site.register(CustomUser, UserAdmin)
 admin.site.register(Certificate, CertAdmin)
 admin.site.register(PreviewSettings)
 admin.site.register(ManualPosts, ManualAdmin)
 admin.site.register(MainPagePost, MainPagePostAdmin)
+admin.site.register(QiwiSecretKey)
+admin.site.register(Deposit, DepositAdmin)
+admin.site.register(Withdrawal, WithdrawalAdmin)
 
 
 admin.site.site_title = 'Панель администратора'

@@ -9,6 +9,7 @@ favicon.ico:Zone.Identifier
 **/.vscode/
 local_settings.py
 test.py
+test2.py
 
 
 # Byte-compiled / optimized / DLL files
