@@ -12,8 +12,19 @@ body {
 }
 
 .container {
-    width: 1200px;
-    margin: 0 auto;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.big_certificate {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .register-block {
@@ -213,6 +224,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-bottom: -5%;
 }
 
 .stack_imgs {
@@ -229,7 +241,7 @@ body {
 
 .cert_list {
     width: 40%;
-    margin-left: 7%;
+    margin-left: 1%;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -321,7 +333,9 @@ body {
 }
 
 .big_certificate img {
-    width: 100%;
+    width: 80%;
+    align-self: center;
+    justify-self: center;
 }
 
 .transfer_btn {
@@ -810,7 +824,7 @@ a.registration {
 }
 
 .empty_page {
-    min-height: calc(100vh - 480px);
+    min-height: calc(100vh - 360px);
 }
 
 .manual_container {
@@ -942,6 +956,8 @@ a.registration {
     margin-top: 5%;
     font-size: 19px;
     font-weight: 400;
+    min-width: 25%;
+
 }
 .login_page {
     display: flex;
@@ -1062,12 +1078,12 @@ a.registration {
     color: #e29c32;
     border: none;
     color: #d4d4b3;
-    align-self: flex-end;
-    /* justify-self: flex-end; */
-
+    align-self: flex-start;
 }
 
 .withdrawal_form {
     display: flex;
     flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: flex-start; */
 }
