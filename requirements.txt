@@ -1,3 +1,4 @@
+celery==5.1.2
 colorama==0.4.4
 Django==3.2.5
 django-allauth==0.45.0
@@ -7,3 +8,4 @@ django-modeltranslation==0.17.3
 easy-thumbnails==2.7.1
 Pillow==8.3.1
 pyQiwiP2P==1.0.1
+redis==3.5.3
