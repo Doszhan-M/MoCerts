@@ -2,6 +2,10 @@ import logging
 import time
 from celery import shared_task
 from pyqiwip2p import QiwiP2P
+from django.template.loader import render_to_string
+from django.core.mail import EmailMultiAlternatives
+from django.conf import settings
+
 
 from .models import Deposit, CustomUser
 
@@ -52,4 +56,20 @@ def check_payment_status(QIWI_PRIV_KEY, bill_id, lifetime, email, amount):
             process_step += lifetime
 
         time.sleep(60)
-         
+        
+
+@shared_task
+def post_withdrawal_alert(username, amount, link):
+    """отправить email админу после вывода средств"""
+    # Собрать контексты для html странички
+    html_content = render_to_string('MainApp/mailing.html',
+                                    {'username': username, 'link': link, 'amount': amount})
+    # Собрать тело сообщения
+    msg = EmailMultiAlternatives(
+        subject=f'Уведомление о новом отклике',
+        from_email=settings.DEFAULT_FROM_EMAIL,
+        to=[settings.ADMINS[0][1], ]
+    )
+    msg.attach_alternative(html_content, "text/html")  # добавляем html
+    msg.send()  # отсылаем
+    logger.info(f'Письмо отправлено {settings.ADMINS}')

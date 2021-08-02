@@ -42,11 +42,11 @@ class DepositAdmin(admin.ModelAdmin):
 
     
 class WithdrawalAdmin(admin.ModelAdmin):
-    list_display = ('amount', 'status', 'user', 'time',)
-    list_display_links = ('amount', 'status',)
+    list_display = ('bill_id', 'amount', 'status', 'user', 'qiwi_wallet','time',)
+    list_display_links = ('bill_id', 'amount', 'status',)
     ordering = ['-time']
     list_filter = ('status', 'user',)
-    search_fields = ('amount', 'status', 'user', 'time',)
+    search_fields = ('amount', 'status', 'user', 'time', 'bill_id')
 
 
 admin.site.register(CustomUser, UserAdmin)

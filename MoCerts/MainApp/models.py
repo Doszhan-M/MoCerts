@@ -173,13 +173,14 @@ class Deposit(models.Model):
         EXPIRED = 3, _('Истекший')
         REJECT = 4, _('Отклонено')
 
-    bill_id = models.PositiveBigIntegerField(verbose_name=pgettext_lazy('id транзакции', 'id транзакции'),)
+    bill_id = models.PositiveBigIntegerField(unique=True ,verbose_name=pgettext_lazy('id транзакции', 'id транзакции'),)
     amount = models.PositiveIntegerField(verbose_name=pgettext_lazy('сумма, руб', 'сумма, руб'),)
-    lifetime = models.PositiveIntegerField(verbose_name=pgettext_lazy('время жизни счета, мин', 'время жизни счета, мин'),)
     status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
                                      related_name='deposit_by_user')
     time = models.TimeField(auto_now_add=True, verbose_name='время создания',)
+    lifetime = models.PositiveIntegerField(verbose_name=pgettext_lazy('время жизни счета, мин', 'время жизни счета, мин'),)
+
 
     class Meta:
         verbose_name = 'Пополнение'
@@ -198,15 +199,17 @@ class Withdrawal(models.Model):
     '''модель транзакции для вывода средств'''
 
     class StatusList(models.IntegerChoices):
-        PAID = 1, _('Исполнено')
-        WAIT = 2, _('В ожидании')
+        WAIT = 1, _('В процессе')
+        PAID = 2, _('Исполнено')
         REJECT = 3, _('Отклонено')
 
+    bill_id = models.CharField(unique=True, max_length=255, verbose_name=pgettext_lazy('id транзакции', 'id транзакции'),)
+    amount = models.PositiveIntegerField(verbose_name=pgettext_lazy('сумма', 'сумма'),)
+    status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
                                      related_name='withdrawal_by_user')
-    amount = models.PositiveIntegerField(verbose_name=pgettext_lazy('сумма', 'сумма'),)
     time = models.TimeField(auto_now_add=True, verbose_name='время создания',)
-    status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
+    qiwi_wallet = models.CharField(max_length=255, verbose_name=pgettext_lazy('номер кошелька', 'номер кошелька'),)
 
     class Meta:
         verbose_name = 'Вывод средств'
@@ -214,8 +217,8 @@ class Withdrawal(models.Model):
 
     def __str__(self):
         '''Строковое отображение'''
-        return f'{self.amount}'
+        return f'{self.bill_id}'
 
     def get_absolute_url(self):
         """получить ссылку на объект"""
-        return reverse('userbalance')
+        return HOST + '/admin/MainApp/withdrawal/'

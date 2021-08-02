@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+{% load i18n %}
+
+<table>
+    <tr>
+        <td>
+            <h1>{% trans "Уведомление о выводе средств" %}</h1>
+            <p>{% trans "Уведомляем вас, что пользователь " %}{{ username }} 
+               {% trans "сделал вывод средств на сумму " %}{{ amount}}$</p>
+            <a href="{{ link }}" style="color:#0000ff">ссылка в админ панель</a>
+        </td>
+
+    </tr>
+</table>

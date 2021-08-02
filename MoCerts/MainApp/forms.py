@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError
 from django import forms
 from .models import CustomUser
 from django.core.validators import MinValueValidator
+from django.core.exceptions import ValidationError
 
 
 class DepositForm(forms.Form):
@@ -12,6 +13,24 @@ class DepositForm(forms.Form):
     amount = IntegerField(label='Сумма пополнения', widget=NumberInput(attrs={'placeholder': 'сумма $'}),\
         validators=[MinValueValidator(1),])
 
+    def __init__(self, *args, **kwargs):
+        super(DepositForm, self).__init__(*args, **kwargs)
+        self.fields['amount'].widget.attrs['min'] = 1
+
+
+class WithdrawalForm(forms.Form):
+    '''форма вывода средств'''
+    
+    withdrawal_amount = IntegerField(label='Сумма вывода', widget=NumberInput(attrs={'placeholder': 'сумма $'}),\
+        validators=[MinValueValidator(1),])
+    qiwi_wallet = CharField(
+        label='Qiwi кошелек', widget=TextInput(attrs={'placeholder': 'номер кошелька'}), required=True)
+
+    def __init__(self, *args, **kwargs):
+        super(WithdrawalForm, self).__init__(*args, **kwargs)
+        self.fields['withdrawal_amount'].widget.attrs['min'] = 1
+
+    
 
 
 class MyLoginForm(LoginForm):

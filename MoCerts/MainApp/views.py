@@ -16,9 +16,9 @@ from pyqiwip2p import QiwiP2P
 
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
-from .forms import MyLoginForm, MySignupForm, UserForm, DepositForm
-from .models import CustomUser, Certificate, ManualPosts, MainPagePost, QiwiSecretKey, Deposit
-from .tasks import check_payment_status  # импорт задачи celery
+from .forms import MyLoginForm, MySignupForm, UserForm, DepositForm, WithdrawalForm
+from .models import CustomUser, Certificate, ManualPosts, MainPagePost, QiwiSecretKey, Deposit, Withdrawal
+from .tasks import check_payment_status, post_withdrawal_alert  # импорт задачи celery
 
 
 logger = logging.getLogger(__name__)
@@ -37,7 +37,7 @@ class UserBalance(LoginRequiredMixin, FormView):
             # собрать переменные
             amount = form.cleaned_data['amount']
             currency = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()['Valute']['USD']['Value']
-            convert_amount = round(currency * amount) # обменять доллары на рубли
+            convert_amount = abs(round(currency * amount)) # обменять доллары на рубли
             bill_id = datetime.today().strftime("%d%m%y%H%M%f")
             # bill_id = '0208211659708528'
             email = self.request.user.email
@@ -50,7 +50,6 @@ class UserBalance(LoginRequiredMixin, FormView):
             # подключиться к сервису qiwi
             p2p = QiwiP2P(auth_key=QIWI_PRIV_KEY)
             new_bill = p2p.bill(bill_id=bill_id, amount=convert_amount, lifetime=lifetime)
-            print(Fore.RED + str(new_bill), Style.RESET_ALL)
             self.success_url = new_bill.pay_url
             
             # передать данные для провереи платежа
@@ -65,13 +64,43 @@ class UserBalance(LoginRequiredMixin, FormView):
             self.success_url = reverse('errorview')
             return redirect(self.get_redirect_url())
 
-    def get_redirect_url(self, *args, **kwargs):
+    def get_redirect_url(self):
         return self.success_url
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # context['SignupForm'] = MySignupForm  # форма регистрации
+        context['WithdrawalForm'] = WithdrawalForm 
+        deposit = Deposit.objects.filter(user = self.request.user)
+        withdrawal = Withdrawal.objects.filter(user = self.request.user)
+        transactions = []
+        for i in deposit:
+            transactions.append(i)
+        for i in withdrawal:
+            transactions.append(i)
+        print(transactions)
         return context
+
+    def get(self, request: HttpRequest, *args: str, **kwargs) -> HttpResponse:
+        '''вывод средств'''
+        if request.GET.get('withdrawal_amount'):
+            withdrawal_amount = request.GET.get('withdrawal_amount')
+            user=self.request.user
+            if int(withdrawal_amount) > 0 and int(withdrawal_amount) <= user.balance:
+                withdrawal_amount = request.GET.get('withdrawal_amount')
+                qiwi_wallet = request.GET.get('qiwi_wallet')
+                bill_id = datetime.today().strftime("%d%m%y%H%M%f")
+                transaction = Withdrawal.objects.create(bill_id=bill_id, user=user, \
+                    amount=withdrawal_amount, qiwi_wallet=qiwi_wallet, status=1,)
+                link = transaction.get_absolute_url()
+                print(Fore.RED + str(link), Style.RESET_ALL)
+                user.balance = user.balance - int(withdrawal_amount)
+                user.save()
+                post_withdrawal_alert.delay(user.email, withdrawal_amount, link)
+                messages.add_message(self.request, messages.INFO, 'Ваша заявка на вывод средств\
+                     принята, скоро ваша заявка будет обработана')
+            else:
+                messages.add_message(self.request, messages.INFO, 'Форма заполнена неверно')
+        return super().get(request, *args, **kwargs)
 
 
 class AuthorizationForms(FormView):
@@ -80,7 +109,7 @@ class AuthorizationForms(FormView):
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['SignupForm'] = MySignupForm  # форма регистрации
+        context['SignupForm'] = MySignupForm 
         return context
 
 

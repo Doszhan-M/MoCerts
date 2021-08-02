@@ -49,18 +49,20 @@
 
         <div class="deposit">
             <h1 class="deposit_title">Вывод средств</h1>
-            <form class="withdrawal_form" action="">
+            <form class="withdrawal_form" action="" name="deposit_form" method="GET">
+
                 <div class="deposit_form">
                     <h2>Сумма вывода</h2>
-                    <input type="text" placeholder="$">
+                    {{ WithdrawalForm.withdrawal_amount }}
                 </div>
                 <div class="deposit_form">
                     <h2>Qiwi кошелек</h2>
-                    <input type="text" placeholder="номер кошелька">
+                    {{ WithdrawalForm.qiwi_wallet }}
                 </div>
-                <button class="deposit_button">Оставить заявку</button>
+                <button type="submit" class="deposit_button">Оставить заявку</button>
             </form>
         </div>
+
 
         <div class="deposit">
             <h1 class="deposit_title">История</h1>
@@ -69,4 +71,5 @@
 
     </div>
 </div>
+<script src="{% static 'js/balanceform.js' %}"></script>
 {% endblock content %}

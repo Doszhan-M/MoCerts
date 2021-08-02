@@ -167,7 +167,7 @@ try:
     EMAIL_USE_TLS = True
     with open(os.path.join(BASE_DIR, 'secret/ADMINS.txt'), 'r') as token:
         admins = token.read()
-    ADMINS = [('Admin', 'admin777@mail.ru'),] # Написать email администратора, для отправки сообщении при ошибках
+    ADMINS = [('Admin', 'doszhan.m@mail.ru'),] # Написать email администратора, для отправки сообщении при ошибках
     SERVER_EMAIL = email
     DEFAULT_FROM_EMAIL = email  # Используется для отправки email после регистрации
     EMAIL_SUBJECT_PREFIX = '[Mosert] '
