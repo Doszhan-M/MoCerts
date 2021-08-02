@@ -1,0 +1,23 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% load i18n %}
+{% load custom_filters %}
+
+
+{% block property %}
+<meta property="og:url" content="{{ 'url'|property }}">
+<meta property="og:image" content="{{ 'image'|property }}">
+{% endblock property%}
+
+{% block title %}
+{% trans 'Сервис не доступен' %} | Mocerts
+{% endblock %}
+
+
+{% block content %}
+<div class="profile_main">
+    <div class="deposit_block">
+        <h1 class="error_view">На данный момент сервис не доступен, попробуйте позднее</h1>
+    </div>
+</div>
+{% endblock content %}

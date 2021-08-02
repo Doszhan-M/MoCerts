@@ -1,32 +1,75 @@
-from datetime import datetime
 import logging
+import requests
+from datetime import datetime
+from colorama import Fore, Style
 
-from django.views.generic import ListView, DetailView, CreateView, DeleteView, UpdateView, FormView, TemplateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, FormView, TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.http import HttpResponse, HttpResponseRedirect, HttpRequest
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse, reverse_lazy
+from django.shortcuts import redirect
 from django.conf import settings
+from pyqiwip2p import QiwiP2P
+
 
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
-from .forms import MyLoginForm, MySignupForm, UserForm
-from .qiwi import QIWISECRET_KEY
-from .models import CustomUser, Certificate, ManualPosts, MainPagePost
+from .forms import MyLoginForm, MySignupForm, UserForm, DepositForm
+from .models import CustomUser, Certificate, ManualPosts, MainPagePost, QiwiSecretKey, Deposit
+from .tasks import check_payment_status  # импорт задачи celery
+
 
 logger = logging.getLogger(__name__)
 
 
-class UserBalance(LoginRequiredMixin, TemplateView):
-    """страница баланса"""
+class UserBalance(LoginRequiredMixin, FormView):
+    """страница пополнения/вывода баланса"""
     template_name = 'MainApp/userbalance.html'
     success_url = reverse_lazy('profile')
     login_url = '/accounts/login/'
+    form_class = DepositForm
+
+    def form_valid(self, form):
+        '''Выставить счет на сумму amount рублей который будет работать 15 минут'''
+        try:
+            # собрать переменные
+            amount = form.cleaned_data['amount']
+            currency = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()['Valute']['USD']['Value']
+            convert_amount = round(currency * amount) # обменять доллары на рубли
+            bill_id = datetime.today().strftime("%d%m%y%H%M%f")
+            # bill_id = '0208211659708528'
+            email = self.request.user.email
+            lifetime=30
+            QIWI_PRIV_KEY = QiwiSecretKey.objects.first().secret_key
+            
+            # создать модель транзакции
+            Deposit.objects.create(bill_id=bill_id, amount=convert_amount, lifetime=lifetime,\
+                 status=1, user=self.request.user)
+            # подключиться к сервису qiwi
+            p2p = QiwiP2P(auth_key=QIWI_PRIV_KEY)
+            new_bill = p2p.bill(bill_id=bill_id, amount=convert_amount, lifetime=lifetime)
+            print(Fore.RED + str(new_bill), Style.RESET_ALL)
+            self.success_url = new_bill.pay_url
+            
+            # передать данные для провереи платежа
+            check_payment_status.delay(QIWI_PRIV_KEY, bill_id, lifetime, email, amount)
+            return redirect(self.get_redirect_url())
+        except ValueError:
+            logger.error('Неверный токен')
+            self.success_url = reverse('errorview')
+            return redirect(self.get_redirect_url())
+        except AttributeError:
+            logger.error('Создайте токен qiwi')
+            self.success_url = reverse('errorview')
+            return redirect(self.get_redirect_url())
+
+    def get_redirect_url(self, *args, **kwargs):
+        return self.success_url
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(QIWISECRET_KEY)
         # context['SignupForm'] = MySignupForm  # форма регистрации
         return context
 
@@ -70,8 +113,7 @@ class UserProfile(LoginRequiredMixin, UpdateView):
         return obj
     
     def post(self, request: HttpRequest, *args: str, **kwargs) -> HttpResponse:
-        messages.add_message(
-                self.request, messages.INFO, 'Изменения сохранены')
+        messages.add_message(self.request, messages.INFO, 'Изменения сохранены')
         return super().post(request, *args, **kwargs)
 
 
@@ -142,6 +184,9 @@ class MyCertificates(LoginRequiredMixin, ListView):
         queryset = [x for x in queryset if x]
         return queryset
 
+
+class ErrorView(TemplateView):
+    template_name = 'MainApp/service_error.html'
 
 @login_required
 def create_certificate(request, nominal):

@@ -21,16 +21,31 @@
 
         <div class="deposit">
             <h1 class="deposit_title">Пополнить счет</h1>
-            <form class="withdrawal_form" action="">
+            <form class="withdrawal_form" action="" name="deposit_form" method="POST">
+                {% csrf_token %}
+
                 <div class="deposit_form">
                     <h2>Сумма пополнения</h2>
-                    <input type="text" placeholder="$">
+                    {{ form.amount }}
                 </div>
-                <button class="deposit_button">Оплатить</button>
-
+                <button type="submit" class="deposit_button">Оплатить</button>
             </form>
-
         </div>
+
+            {% if form.errors %}
+            <ul class="form_errors">
+                {% for field in form %}
+                {% for error in field.errors %}
+                <li>
+                    {% if field != '__all__' %}
+                    <strong>{{ field.label }}:</strong>
+                    {% endif %}
+                    {{ error }}
+                </li>
+                {% endfor %}
+                {% endfor %}
+            </ul>
+            {% endif %}
 
         <div class="deposit">
             <h1 class="deposit_title">Вывод средств</h1>
@@ -54,6 +69,4 @@
 
     </div>
 </div>
-
-
 {% endblock content %}

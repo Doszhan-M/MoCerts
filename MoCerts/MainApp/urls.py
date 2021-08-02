@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import MainView, UserProfile, ManualView, SelectCertificate, create_certificate, MyCertificates,\
-     CertificateDetail, PostDetail, UserBalance, accept, pay_certificate
+     CertificateDetail, PostDetail, UserBalance, ErrorView, accept, pay_certificate
 
 
 urlpatterns = [
@@ -9,6 +9,7 @@ urlpatterns = [
     path('profile/', UserProfile.as_view(), name='profile'),
     path('manual/', ManualView.as_view(), name='manual'),
     path('userbalance/', UserBalance.as_view(), name='userbalance'),
+    path('errorview/', ErrorView.as_view(), name='errorview'),
 
     path('certificates/', SelectCertificate.as_view(), name='select_certificate'),
     path('my_certificates', MyCertificates.as_view(), name='my_certificates'),

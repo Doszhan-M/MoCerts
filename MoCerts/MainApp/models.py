@@ -5,6 +5,7 @@ from embed_video.fields import EmbedVideoField
 from django.utils.translation import gettext as _
 from django.utils.translation import pgettext_lazy
 from ckeditor_uploader.fields import RichTextUploadingField
+from django.core.exceptions import ValidationError
 
 from MoCerts.settings import HOST
 
@@ -146,9 +147,14 @@ class MainPagePost(models.Model):
 
 class QiwiSecretKey(models.Model):
     '''модель QiwiToken'''
-
     secret_key = models.CharField(max_length=255, default='Token', verbose_name=pgettext_lazy('secret_key', 'secret_key'))
 
+    def save(self, *args, **kwargs):
+        '''модель может быть только в единственном экземпляре'''
+        if not self.pk and QiwiSecretKey.objects.exists():
+            raise ValidationError('There is can be only one QiwiSecretKey instance')
+        return super(QiwiSecretKey, self).save(*args, **kwargs)
+    
     class Meta:
         verbose_name = 'Токен qiwi'
         verbose_name_plural = 'Токен qiwi'
@@ -162,13 +168,14 @@ class Deposit(models.Model):
     '''модель транзакции для пополнения'''
 
     class StatusList(models.IntegerChoices):
-        PAID = 1, _('Оплачено')
-        WAIT = 2, _('В ожидании')
-        REJECT = 3, _('Отклонено')
+        WAIT = 1, _('В ожидании')
+        PAID = 2, _('Оплачено')
+        EXPIRED = 3, _('Истекший')
+        REJECT = 4, _('Отклонено')
 
     bill_id = models.PositiveBigIntegerField(verbose_name=pgettext_lazy('id транзакции', 'id транзакции'),)
-    amount = models.PositiveIntegerField(verbose_name=pgettext_lazy('сумма', 'сумма'),)
-    lifetime = models.PositiveIntegerField(verbose_name=pgettext_lazy('время жизни счета', 'время жизни счета'),)
+    amount = models.PositiveIntegerField(verbose_name=pgettext_lazy('сумма, руб', 'сумма, руб'),)
+    lifetime = models.PositiveIntegerField(verbose_name=pgettext_lazy('время жизни счета, мин', 'время жизни счета, мин'),)
     status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
                                      related_name='deposit_by_user')

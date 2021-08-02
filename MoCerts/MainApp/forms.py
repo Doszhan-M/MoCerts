@@ -1,6 +1,17 @@
+import re
 from allauth.account.forms import LoginForm, SignupForm
-from django.forms import ModelForm, TextInput, CharField, EmailInput, FileInput
+from django.forms import ModelForm, TextInput, CharField, EmailInput, FileInput, IntegerField, NumberInput
+from django.core.exceptions import ValidationError
+from django import forms
 from .models import CustomUser
+from django.core.validators import MinValueValidator
+
+
+class DepositForm(forms.Form):
+    '''форма пополнения'''
+    amount = IntegerField(label='Сумма пополнения', widget=NumberInput(attrs={'placeholder': 'сумма $'}),\
+        validators=[MinValueValidator(1),])
+
 
 
 class MyLoginForm(LoginForm):
