@@ -19,9 +19,22 @@
         <li class="nav__ul--item">
             <a href="{% url 'manual' %}" style="text-decoration: none;">{% trans 'Instruction' %}</a>
         </li>
+        {% if user.is_authenticated %}
         <li class="nav__ul--item registration">
-            <a href="#" style="text-decoration: none;">{% trans 'Registration' %}</a>
+            <a href="{% url 'profile' %}" style="text-decoration: none;">{{ user.first_name }} {{ user.last_name }}</a>
         </li>
+        <li class="nav__ul--item registration">
+            <a href="{% url 'userbalance' %}" style="text-decoration: none;">{{ user.balance }}$</a>
+        </li>
+        {% else %}
+        <li class="nav__ul--item registration">
+            <a href="/accounts/signup/" style="text-decoration: none;">{% trans 'Registration' %}</a>
+        </li>
+        <li class="nav__ul--item registration">
+            <a href="/accounts/login/" style="text-decoration: none;">{% trans 'Login' %}</a>
+        </li>
+        {% endif %}
+
     </ul>
 
     <div class="dropdown dropdown__menu--mobile">
@@ -46,22 +59,6 @@
             <li id="DE">
                 <img src="{% static 'img/DEU.png' %}" alt="DEU">
                 <a href="/de/">DE</a>
-            </li>
-            <li id="ES">
-                <img src="{% static 'img/ESP.png' %}" alt="ESP">
-                <a href="/es/">ES</a>
-            </li>
-            <li id="FR">
-                <img src="{% static 'img/FRA.png' %}" alt="FRA">
-                <a href="/fr/">FR</a>
-            </li>
-            <li id="IT">
-                <img src="{% static 'img/ITA.png' %}" alt="ITA">
-                <a href="/it/">IT</a>
-            </li>
-            <li id="PT">
-                <img src="{% static 'img/PRT.png' %}" alt="PRT">
-                <a href="/pt/">PT</a>
             </li>
         </ul>
     </div>

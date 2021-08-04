@@ -608,9 +608,8 @@ ul, li {
     display: flex;
     flex-direction:row;
     justify-content: space-around;
-
-
 }
+
 .documents-wrap .documents-item {
     width: 210px;
     height: 150px;
@@ -931,12 +930,13 @@ a.registration {
 
 .form_separate input {
     margin-bottom: 1%;
+    max-width: 14ch;
 }
 
 .browse {
     margin-top: 3%;
     margin-left: 5%;
-    width: 171px;
+    width: 500px;
     height: 39px;
 }
 
@@ -945,6 +945,13 @@ a.registration {
     font-size: 19px;
     color: #dba95e;
     margin-top: 1%;
+    background: url("../img/links_bg.webp") no-repeat;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    padding-top: 3px;
+    width: 169px;
+    height: 49px;
 }
 
 .not_form {
@@ -1003,6 +1010,11 @@ a.registration {
 .register_main {
     display: flex;
     margin-left: 11%;
+}
+
+.pass_reset {
+    display: flex;
+    /* margin-left: -5%; */
 }
 
 .register_social {

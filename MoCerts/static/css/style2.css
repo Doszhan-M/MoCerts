@@ -259,9 +259,8 @@ li {
     margin-top: 10px;
     /* min-width: 33.33333%; */
     display: block;
-
-
 }
+
 .main__article--block {
     align-self: flex-start;
     height: 135px;
@@ -655,8 +654,8 @@ li {
     .main__left--article,
     .main__right--article {
         width: 100%;
+        height: 240px !important;
         padding: 15px;
-        height: unset;
     }
 
     .main__article--header {
@@ -667,13 +666,159 @@ li {
 
     .main__article--text,
     .main__article--more {
-        display: none!important;
+        display: block;
+        height: 100%;
     }
 
     .main__info {
         font-size: 19px!important;
         line-height: unset;
     }
+
+    .profile_form {
+        align-self: center;
+        display: flex;
+        flex-direction: column;
+        /* justify-content: center;
+        align-items: center; */
+        /* background-color: #32415b; */
+    }
+
+    .form_separate p{
+        display: flex;
+        min-width: 15ch;
+    }
+
+    .form_separate a{
+        display: flex;
+        min-width: 15ch;
+    }
+    
+    .form_separate input {
+        margin-bottom: 1%;
+        max-width: 13ch !important;
+
+    }
+
+    .form_separate .form-control {
+        max-width: 168px !important;
+    }
+
+    .login_social img {
+        width: 210px;
+    }
+
+    .login_form input {
+        text-align: center;
+        background-color: transparent;
+        min-width: 80%;
+        border: none;
+    }
+
+    .register_main {
+        display: flex;
+        margin-left: -83%;
+    }
+
+    .main__nav--item {
+        margin-left: 22%;
+        width: 55% !important;
+        
+    }
+
+    .profile_btn {
+        border: none;
+        font-size: 19px;
+        color: #dba95e;
+        margin-top: 1%;
+        background: url("../img/links_bg.webp") no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        padding-top: 3px;
+        width: 169px;
+        height: 49px;
+        left: 0% !important;
+
+    }
+
+    .register {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .manual_video {
+        margin-left: 2.5%;
+        width: 95%;
+    }
+    
+    .pass_reset {
+        display: flex;
+        margin-left: -87%;
+    }
+
+    .certificate_row {
+        display: flex;
+        flex-direction:column;
+        justify-content: center;
+    }
+
+    .documents-wrap .documents-item {
+        width: 352px;
+        height:100%;
+        /* margin-bottom: 50px; */
+    }
+
+    .documents-item img {
+        width: 352px;
+    }
+
+    .certs_container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin-bottom: -5%;
+    }
+
+    .cert_list {
+        min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .cert_row a {
+        font-family: "mon";
+        margin-left: 0px;
+        font-size: 0.7em;
+    }
+
+    .cert_row span {
+        font-family: "mon";
+        margin-left: 15px;
+        font-size: 0.8em;
+    }
+    .messagers {
+        display: none;
+    }
+
+    .select {
+        max-width: 50px;
+        height: 25px;
+    }
+
+    .dropdown_mobile {
+        display: block!important;
+    }
+
+    .active {
+        z-index: 1;
+        background-color: #32415b;
+    }
+
 }
 
 @media only screen and (max-width: 600px) {
