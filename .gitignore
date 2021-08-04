@@ -4,7 +4,7 @@
 **/.idea/
 **/__pycache__/
 dump.rdb
-db.sqlite3
+# db.sqlite3
 favicon.ico:Zone.Identifier
 **/.vscode/
 local_settings.py
