@@ -753,6 +753,67 @@ a.registration {
     }
 }
 
+@media only screen and (max-width: 600px) {
+    .header__reg,
+    .dropdown {
+        display: none;
+    }
+
+    .header__img {
+        object-fit: cover;
+    }
+
+    .main__banner img {
+        max-width: 90%;
+        width: 100%;
+    }
+
+    .header__avatar--adaptive {
+        display: block;
+    }
+
+    .header__avatar--adaptive img {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        border: 2px solid rgb(219, 169, 94);
+    }
+
+    .logo {
+        text-align: center;
+    }
+
+    .logo img {
+        max-width: 90%;
+        width: 100%;
+    }
+
+    .header__mobile--nav {
+        display: flex;
+        cursor: pointer;
+    }
+
+    .dropdown__menu--mobile {
+        display: block!important;
+        transform: translateY(50px);
+    }
+
+    .main__nav--ul {
+        display: none;
+    }
+
+    .select {
+        display: flex!important;
+        align-items: center!important;
+    }
+
+    .open__dropdown {
+        position: relative!important;
+        right: unset!important;
+        top: unset!important;
+    }
+}
+
 @media screen and (max-width:576px) {
     .header__hamburger {
         top: 20px;

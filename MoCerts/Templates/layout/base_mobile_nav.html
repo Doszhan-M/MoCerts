@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 
-{% extends 'layout/base.html' %}
 {% load static %}
 {% load i18n %}
 
-
-{% block mobile_base %}
 
 <div class="nav__mobile">
     <i class="fa fa-times close__nav" aria-hidden="true"></i>
@@ -14,10 +11,10 @@
             <a href="{% url 'main_page' %}" style="text-decoration: none;">{% trans 'Home' %}</a>
         </li>
         <li class="nav__ul--item">
-            <a href="{% url 'select_certificate' %}" style="text-decoration: none;">{% trans 'Create Certificate' %}</a>
+            <a href="{% url 'select_certificate' %}" style="text-decoration: none;">{% trans 'Select Certificate' %}</a>
         </li>
         <li class="nav__ul--item">
-            <a href="my_certificates" style="text-decoration: none;">{% trans 'My Certificates' %}</a>
+            <a href="{% url 'my_certificates' %}" style="text-decoration: none;">{% trans 'My Certificates' %}</a>
         </li>
         <li class="nav__ul--item">
             <a href="{% url 'manual' %}" style="text-decoration: none;">{% trans 'Instruction' %}</a>
@@ -69,5 +66,3 @@
         </ul>
     </div>
 </div>
-
-{% endblock mobile_base%}
