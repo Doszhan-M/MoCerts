@@ -650,7 +650,7 @@ li {
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 600px) {
     .main__left--article,
     .main__right--article {
         width: 100%;
@@ -812,6 +812,8 @@ li {
 
     .dropdown_mobile {
         display: block!important;
+        z-index: -1;
+
     }
 
     .active {
@@ -819,9 +821,9 @@ li {
         background-color: #32415b;
     }
 
-}
 
-@media only screen and (max-width: 600px) {
+
+
     .header__reg,
     .dropdown {
         display: none;
