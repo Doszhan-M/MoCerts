@@ -32,24 +32,24 @@
             </form>
         </div>
 
-            {% if form.errors %}
-            <ul class="form_errors">
-                {% for field in form %}
-                {% for error in field.errors %}
-                <li>
-                    {% if field != '__all__' %}
-                    <strong>{{ field.label }}:</strong>
-                    {% endif %}
-                    {{ error }}
-                </li>
-                {% endfor %}
-                {% endfor %}
-            </ul>
-            {% endif %}
+        {% if form.errors %}
+        <ul class="form_errors">
+            {% for field in form %}
+            {% for error in field.errors %}
+            <li>
+                {% if field != '__all__' %}
+                <strong>{{ field.label }}:</strong>
+                {% endif %}
+                {{ error }}
+            </li>
+            {% endfor %}
+            {% endfor %}
+        </ul>
+        {% endif %}
 
         <div class="deposit">
             <h1 class="deposit_title">Вывод средств</h1>
-            <form class="withdrawal_form" action="" name="deposit_form" method="GET">
+            <form class="withdrawal_form" action="{% url 'userbalance' %}" name="deposit_form" method="GET">
 
                 <div class="deposit_form">
                     <h2>Сумма вывода</h2>
@@ -63,10 +63,26 @@
             </form>
         </div>
 
-
         <div class="deposit">
             <h1 class="deposit_title">История</h1>
-
+            <table class="paymen_history">
+                <tr class="history_title">
+                    <td>Дата</td>
+                    <td>Тип транзакции</td>
+                    <td>id номер</td>
+                    <td>Сумма</td>
+                    <td>Статус</td>
+                </tr>
+                {% for transaction in  transactions %}
+                <tr class="history_row">
+                    <td>{{transaction.time}}</td>
+                    <td>{{transaction.type}}</td>
+                    <td>{{transaction.bill_id}}</td>
+                    <td>{{transaction.amount}}</td>
+                    <td>{{transaction.get_status_display}}</td>
+                </tr>
+                {% endfor %}
+            </table>
         </div>
 
     </div>

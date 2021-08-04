@@ -178,7 +178,8 @@ class Deposit(models.Model):
     status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
                                      related_name='deposit_by_user')
-    time = models.TimeField(auto_now_add=True, verbose_name='время создания',)
+    time = models.DateField(auto_now_add=True, verbose_name='время создания',)
+    type = models.CharField(max_length=255, default='Пополнение', verbose_name=pgettext_lazy('тип транзакции', 'тип транзакции'),)
     lifetime = models.PositiveIntegerField(verbose_name=pgettext_lazy('время жизни счета, мин', 'время жизни счета, мин'),)
 
 
@@ -188,7 +189,7 @@ class Deposit(models.Model):
 
     def __str__(self):
         '''Строковое отображение'''
-        return f'{self.bill_id}'
+        return f'{self.time}'
 
     def get_absolute_url(self):
         """получить ссылку на объект"""
@@ -208,7 +209,8 @@ class Withdrawal(models.Model):
     status = models.PositiveIntegerField(choices=StatusList.choices, default=StatusList.WAIT)
     user = models.ForeignKey(CustomUser, on_delete=models.SET_NULL, default=None, null=True, blank=True,
                                      related_name='withdrawal_by_user')
-    time = models.TimeField(auto_now_add=True, verbose_name='время создания',)
+    time = models.DateField(auto_now_add=True, verbose_name='время создания',)
+    type = models.CharField(max_length=255, default='Вывод средств', verbose_name=pgettext_lazy('тип транзакции', 'тип транзакции'),)
     qiwi_wallet = models.CharField(max_length=255, verbose_name=pgettext_lazy('номер кошелька', 'номер кошелька'),)
 
     class Meta:
@@ -217,7 +219,7 @@ class Withdrawal(models.Model):
 
     def __str__(self):
         '''Строковое отображение'''
-        return f'{self.bill_id}'
+        return f'{self.time}'
 
     def get_absolute_url(self):
         """получить ссылку на объект"""

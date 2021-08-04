@@ -27,50 +27,18 @@
 
 
 
-{% if user.is_authenticated %}
-<a style="text-decoration: none;" href="{% url 'account_logout' %}">
-    <span class="header__reg" style="font-size:medium;">{% trans 'Logout' %}</span>
-</a>
-{% endif %}
+{% for transaction in  transactions %}
+<p>{{transaction.type}}</p>
+<p>{{ transaction.get_status_display }}</p>
+{% endfor %}
 
-<div class="custom_wrap custom_font">
-    <h2 style="text-align: center; margin-top:-3%">Кабинет пользователя</h2><br>
-    <div class="profile_board">
-        <div class="profile_photo">
-            {% if user.photo %}
-            <img src="{{ user.photo.url }}" width="200">
-            {% else %}
-            <a href="#">Загрузите <br> фото</a>
-            {% endif %}
-        </div>
-        <div style="width: 70%;">
-            <div class="profile_data">
-                <p class="td_left">{% trans "Имя" %}</p>
-                <p class="td_right">{{user.first_name}}</p>
-            </div>
-            <div class="profile_data">
-                <p class="td_left">{% trans "Фамилия" %}</p>
-                <p class="td_right">{{user.last_name}}</p>
-            </div>
-            <div class="profile_data">
-                <p class="td_left">{% trans "Почта" %}</p>
-                <p class="td_right">{{user.email}}</p>
-            </div>
-            <div class="profile_data">
-                <p class="td_left">{% trans "Баланс" %}</p>
-                <p class="td_right">0$</p>
-            </div>
-        </div>
-    </div><br>
-    <div class="main__nav--item" style="width: 20%;">
-        <a style="position: relative;top: -10px; color: #dba95e;" class="btn" href="#">
-            Редактировать профиль
-        </a>
-        
-    </div>
+<div class="paymen_history">
+    <p>Дата</p>
+    <p>Тип транзакции</p>
+    <p>ID номер</p>
+    <p>Статус</p>
+    <p>Сумма</p>
 </div>
-
-<img class="profile_bg" src="/static/img/register_bg.jpg" alt="register_bg" width="40%">
 
 
 <div style="position: absolute; top: 108%; left:0.5%;">

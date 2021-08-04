@@ -13,7 +13,6 @@ from django.shortcuts import redirect
 from django.conf import settings
 from pyqiwip2p import QiwiP2P
 
-
 from .names.names_generator import false_user
 from .certificates.certificate_generator import generate_certificate
 from .forms import MyLoginForm, MySignupForm, UserForm, DepositForm, WithdrawalForm
@@ -22,85 +21,6 @@ from .tasks import check_payment_status, post_withdrawal_alert  # импорт �
 
 
 logger = logging.getLogger(__name__)
-
-
-class UserBalance(LoginRequiredMixin, FormView):
-    """страница пополнения/вывода баланса"""
-    template_name = 'MainApp/userbalance.html'
-    success_url = reverse_lazy('profile')
-    login_url = '/accounts/login/'
-    form_class = DepositForm
-
-    def form_valid(self, form):
-        '''Выставить счет на сумму amount рублей который будет работать 15 минут'''
-        try:
-            # собрать переменные
-            amount = form.cleaned_data['amount']
-            currency = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()['Valute']['USD']['Value']
-            convert_amount = abs(round(currency * amount)) # обменять доллары на рубли
-            bill_id = datetime.today().strftime("%d%m%y%H%M%f")
-            # bill_id = '0208211659708528'
-            email = self.request.user.email
-            lifetime=30
-            QIWI_PRIV_KEY = QiwiSecretKey.objects.first().secret_key
-            
-            # создать модель транзакции
-            Deposit.objects.create(bill_id=bill_id, amount=convert_amount, lifetime=lifetime,\
-                 status=1, user=self.request.user)
-            # подключиться к сервису qiwi
-            p2p = QiwiP2P(auth_key=QIWI_PRIV_KEY)
-            new_bill = p2p.bill(bill_id=bill_id, amount=convert_amount, lifetime=lifetime)
-            self.success_url = new_bill.pay_url
-            
-            # передать данные для провереи платежа
-            check_payment_status.delay(QIWI_PRIV_KEY, bill_id, lifetime, email, amount)
-            return redirect(self.get_redirect_url())
-        except ValueError:
-            logger.error('Неверный токен')
-            self.success_url = reverse('errorview')
-            return redirect(self.get_redirect_url())
-        except AttributeError:
-            logger.error('Создайте токен qiwi')
-            self.success_url = reverse('errorview')
-            return redirect(self.get_redirect_url())
-
-    def get_redirect_url(self):
-        return self.success_url
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context['WithdrawalForm'] = WithdrawalForm 
-        deposit = Deposit.objects.filter(user = self.request.user)
-        withdrawal = Withdrawal.objects.filter(user = self.request.user)
-        transactions = []
-        for i in deposit:
-            transactions.append(i)
-        for i in withdrawal:
-            transactions.append(i)
-        print(transactions)
-        return context
-
-    def get(self, request: HttpRequest, *args: str, **kwargs) -> HttpResponse:
-        '''вывод средств'''
-        if request.GET.get('withdrawal_amount'):
-            withdrawal_amount = request.GET.get('withdrawal_amount')
-            user=self.request.user
-            if int(withdrawal_amount) > 0 and int(withdrawal_amount) <= user.balance:
-                withdrawal_amount = request.GET.get('withdrawal_amount')
-                qiwi_wallet = request.GET.get('qiwi_wallet')
-                bill_id = datetime.today().strftime("%d%m%y%H%M%f")
-                transaction = Withdrawal.objects.create(bill_id=bill_id, user=user, \
-                    amount=withdrawal_amount, qiwi_wallet=qiwi_wallet, status=1,)
-                link = transaction.get_absolute_url()
-                print(Fore.RED + str(link), Style.RESET_ALL)
-                user.balance = user.balance - int(withdrawal_amount)
-                user.save()
-                post_withdrawal_alert.delay(user.email, withdrawal_amount, link)
-                messages.add_message(self.request, messages.INFO, 'Ваша заявка на вывод средств\
-                     принята, скоро ваша заявка будет обработана')
-            else:
-                messages.add_message(self.request, messages.INFO, 'Форма заполнена неверно')
-        return super().get(request, *args, **kwargs)
 
 
 class AuthorizationForms(FormView):
@@ -214,8 +134,104 @@ class MyCertificates(LoginRequiredMixin, ListView):
         return queryset
 
 
+class UserBalance(LoginRequiredMixin, FormView):
+    """страница пополнения/вывода баланса"""
+    template_name = 'MainApp/userbalance.html'
+    success_url = reverse_lazy('profile')
+    login_url = '/accounts/login/'
+    form_class = DepositForm
+
+    def form_valid(self, form):
+        '''Выставить счет на сумму amount рублей который будет работать 15 минут'''
+        try:
+            # собрать переменные
+            amount = form.cleaned_data['amount']
+            currency = requests.get('https://www.cbr-xml-daily.ru/daily_json.js').json()['Valute']['USD']['Value']
+            convert_amount = abs(round(currency * amount)) # обменять доллары на рубли
+            bill_id = datetime.today().strftime("%d%m%y%H%M%f")
+            # bill_id = '0208211659708528'
+            email = self.request.user.email
+            lifetime=30
+            QIWI_PRIV_KEY = QiwiSecretKey.objects.first().secret_key
+            
+            # создать модель транзакции
+            Deposit.objects.create(bill_id=bill_id, amount=amount, lifetime=lifetime,\
+                 status=1, user=self.request.user)
+            # подключиться к сервису qiwi
+            p2p = QiwiP2P(auth_key=QIWI_PRIV_KEY)
+            new_bill = p2p.bill(bill_id=bill_id, amount=convert_amount, lifetime=lifetime)
+            self.success_url = new_bill.pay_url
+            
+            # передать данные для провереи платежа
+            check_payment_status.delay(QIWI_PRIV_KEY, bill_id, lifetime, email, amount)
+            return redirect(self.get_redirect_url())
+        except ValueError:
+            logger.error('Неверный токен')
+            self.success_url = reverse('errorview')
+            return redirect(self.get_redirect_url())
+        except AttributeError:
+            logger.error('Создайте токен qiwi')
+            self.success_url = reverse('errorview')
+            return redirect(self.get_redirect_url())
+
+    def get_redirect_url(self):
+        return self.success_url
+
+    def bSort(array):
+        # определяем длину массива
+        length = len(array)
+        #Внешний цикл, количество проходов N-1
+        for i in range(length):
+            # Внутренний цикл, N-i-1 проходов
+            for j in range(0, length-i-1):
+                #Меняем элементы местами
+                if array[j.time] > array[j.time+1]:
+                    temp = array[j]
+                    array[j.time] = array[j.time+1]
+                    array[j+1] = temp
+        return array
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['WithdrawalForm'] = WithdrawalForm 
+        deposit = Deposit.objects.filter(user = self.request.user).order_by('-id')
+        withdrawal = Withdrawal.objects.filter(user = self.request.user).order_by('-id')
+        transactions = []
+        for i in deposit:
+            transactions.append(i)
+        for i in withdrawal:
+            transactions.append(i)
+        # transactions = self.bSort(transactions)
+        context['transactions'] = transactions 
+        return context
+
+    def get(self, request: HttpRequest, *args: str, **kwargs) -> HttpResponse:
+        '''вывод средств'''
+        if request.GET.get('withdrawal_amount'):
+            withdrawal_amount = request.GET.get('withdrawal_amount')
+            user=self.request.user
+            if int(withdrawal_amount) > 0 and int(withdrawal_amount) <= user.balance:
+                withdrawal_amount = request.GET.get('withdrawal_amount')
+                qiwi_wallet = request.GET.get('qiwi_wallet')
+                bill_id = datetime.today().strftime("%d%m%y%H%M%f")
+                transaction = Withdrawal.objects.create(bill_id=bill_id, user=user, \
+                    amount=withdrawal_amount, qiwi_wallet=qiwi_wallet, status=1,)
+                link = transaction.get_absolute_url()
+                user.balance = user.balance - int(withdrawal_amount)
+                user.save()
+                post_withdrawal_alert.delay(user.email, withdrawal_amount, link)
+                messages.add_message(self.request, messages.INFO, 'Ваша заявка на вывод средств\
+                     принята, скоро ваша заявка будет обработана')
+                return HttpResponseRedirect(reverse('userbalance'))
+            else:
+                messages.add_message(self.request, messages.INFO, 'Форма заполнена неверно')
+        return super().get(request, *args, **kwargs)
+
+
 class ErrorView(TemplateView):
+    '''сервис не доступен'''
     template_name = 'MainApp/service_error.html'
+
 
 @login_required
 def create_certificate(request, nominal):
