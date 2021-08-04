@@ -831,6 +831,7 @@ a.registration {
     width: 100%;
     justify-content: center;
     align-content: center;
+    min-height: calc(100vh - 390px);
 }
 
 .manual_title {
