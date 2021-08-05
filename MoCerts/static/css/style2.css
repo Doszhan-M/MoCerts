@@ -777,7 +777,6 @@ li {
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        margin-bottom: -5%;
     }
 
     .cert_list {
@@ -816,10 +815,6 @@ li {
 
     .active {
         z-index: 1;
-    }
-
-    .active .telegram-share {
-        z-index: 199;
     }
 
     .header__reg,
