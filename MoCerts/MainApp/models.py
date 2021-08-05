@@ -12,8 +12,7 @@ from MoCerts.settings import HOST
 
 class CustomUser(AbstractUser):
     ''''расширение модели пользователя'''
-    photo = models.ImageField(
-        upload_to='accounts/image/%Y/%m/%d', blank=True, verbose_name='Аватарка')
+    photo = models.FileField(upload_to='avatars', blank=True, verbose_name='Аватарка')
     certificate = models.ForeignKey(
         'Certificate', on_delete=models.SET_NULL, null=True, blank=True)
     telegram_id = models.BigIntegerField(

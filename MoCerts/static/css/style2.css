@@ -157,6 +157,7 @@ li {
 
 .header__avatar img {
     border-radius: 50%;
+    width: 74px !important;
 }
 
 .header__sum {

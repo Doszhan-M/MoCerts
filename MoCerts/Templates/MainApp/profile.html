@@ -18,7 +18,8 @@
 <div class="profile_main">
     <div class="profile_block">
         <h1>Ваш профиль</h1>
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" action="">
+            {% csrf_token %}
             <div class="profile_form">
 
                 <div class="form_separate">
@@ -27,15 +28,15 @@
                     {% else %}
                     <img src="{% static 'img/profile.png' %}" alt="ava">
                     {% endif %}
-                    <p class="browse">{{ form.photo}}</p>
+                    <!-- <p class="browse">{{ form.photo }}</p> -->
                 </div>
 
                 <div class="form_separate">
-                    {% csrf_token %}
-                    <p><span>Имя:</span><span>{{ form.first_name }}</span></p>
+                    <!-- <p><span>Имя:</span><span>{{ form.first_name }}</span></p>
                     <p><span>Фамилия:</span><span>{{ form.last_name }}</span></p>
-                    <p><span>Email:</span><span>{{ form.email }}</span></p>
-                    <p class="not_form"><span>Баланс:</span><span class="form_span">{{ user.balance }}$</span></p><br>
+                    <p><span>Email:</span><span>{{ form.email }}</span></p>-->
+                    {{form.as_p}}
+                    <p class="not_form"><span>Баланс:</span><span class="form_span">{{ user.balance }}$</span></p><br> 
 
                     <button type="submit" class="main__nav--item profile_btn">Сохранить</button>
 

@@ -50,16 +50,20 @@ class PostDetail(AuthorizationForms, DetailView):
 
 class UserProfile(LoginRequiredMixin, UpdateView):
     """кабинет пользователя"""
-    model = CustomUser
-    context_object_name = 'user'
     template_name = 'MainApp/profile.html'
     form_class = UserForm
     success_url = reverse_lazy('profile')
     login_url = '/accounts/login/'
 
     def get_object(self,):
-        obj = CustomUser.objects.get(first_name=self.request.user)
+        obj = CustomUser.objects.get(email=self.request.user.email)
+        print(obj.photo)
         return obj
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['user'] = CustomUser.objects.get(email=self.request.user.email)
+        return context
     
     def post(self, request: HttpRequest, *args: str, **kwargs) -> HttpResponse:
         messages.add_message(self.request, messages.INFO, 'Изменения сохранены')

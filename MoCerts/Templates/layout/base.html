@@ -85,22 +85,34 @@
         <img src="{% static 'img/koners.webp' %}" class="header__left--koners koners" alt="Koners">
 
         <div class="header__container">
+            {% if user.is_authenticated %}
+            {% if user.photo %}
+            <div class="header__avatar--adaptive">
+                <a href="{% url 'profile' %}"><img src="{{ user.photo.url }}" alt="Avatar"></a>
+            </div>
+            {% else %}
             <div class="header__avatar--adaptive">
                 <img src="{% static 'img/avatar.webp' %}" alt="Avatar">
             </div>
+            {% endif %}
             <div class="logo">
                 <a href="{% url 'main_page' %}"><img src="{% static 'img/logo.webp' %}" alt="Logotype"></a>
             </div>
             <div class="header__mobile--nav">
                 <span></span>
             </div>
-            {% if user.is_authenticated %}
             <a href="{% url 'profile' %}" style="text-decoration: none;">
                 <span class="header__reg">{{ user.first_name }} {{ user.last_name }}</span>
             </a>
+            {% if user.photo %}
             <div class="header__avatar">
-                <a href="#"><img src="{% static 'img/avatar.webp' %}" alt="Avatar"></a>
+                <a href="{% url 'profile' %}"><img src="{{ user.photo.url }}" alt="Avatar"></a>
             </div>
+            {% else %}
+            <div class="header__avatar">
+                <img src="{% static 'img/avatar.webp' %}" alt="Avatar">
+            </div>
+            {% endif %}
             <a href="{% url 'userbalance' %}" style="text-decoration: none;">
                 <span class="header__sum">
                     {{ user.balance }}$

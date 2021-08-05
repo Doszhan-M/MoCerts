@@ -62,7 +62,7 @@ class UserForm(ModelForm):
     class Meta:
         model = CustomUser
 
-        fields = ['first_name', 'last_name', 'email', 'photo', 'balance',]
+        fields = ['first_name', 'last_name', 'email', 'photo',]
 
         labels = {'first_name': 'Имя',
                     'last_name': 'Фамилия', 'email': 'Email', 'photo': 'Аватар', }
@@ -85,10 +85,5 @@ class UserForm(ModelForm):
             'photo': FileInput(attrs={
                 'class': 'form-control',
                 'style': 'width:30ch; border: none; font-size: 19px;',
-            }),
-            'balance': TextInput(attrs={
-                'class': 'form-control',
-                'readonly': 'readonly',
-                'style': 'width:20ch; background-color: transparent; border: none; font-size: 22px;',
             }),
         }
