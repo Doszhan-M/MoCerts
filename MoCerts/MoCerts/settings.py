@@ -1,4 +1,5 @@
 import os
+import ast
 from colorama import Fore, Style
 from MoCerts.log_settings import log_settings
 
@@ -151,7 +152,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 ACCOUNT_FORMS = {'signup': 'MainApp.forms.MySignupForm', 'login': 'MainApp.forms.MyLoginForm'}
 # Настройки почтового сервера
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 # EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
 try:
     with open(os.path.join(BASE_DIR, 'secret/EMAIL_HOST.txt'), 'r') as token:
@@ -167,7 +167,7 @@ try:
     EMAIL_USE_TLS = True
     with open(os.path.join(BASE_DIR, 'secret/ADMINS.txt'), 'r') as token:
         admins = token.read()
-    ADMINS = [('Admin', 'doszhan.m@mail.ru'),] # Написать email администратора, для отправки сообщении при ошибках
+    ADMINS = [ast.literal_eval(admins),] # Написать email администратора, для отправки сообщении при ошибках
     SERVER_EMAIL = email
     DEFAULT_FROM_EMAIL = email  # Используется для отправки email после регистрации
     EMAIL_SUBJECT_PREFIX = '[Mosert] '

@@ -1,6 +1,14 @@
 {% extends "account/base.html" %}
-
 {% load i18n %}
+{% load static %}
+{% load socialaccount %}
+
+
+{% block title %}
+{{ block.super }} : Вход на сайт
+{% endblock title%}
+
+{% block content %}
 
 {% block head_title %}{% trans "Sign Up Closed" %}{% endblock %}
 

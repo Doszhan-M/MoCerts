@@ -65,10 +65,10 @@ def post_withdrawal_alert(username, amount, link):
                                     {'username': username, 'link': link, 'amount': amount})
     # Собрать тело сообщения
     msg = EmailMultiAlternatives(
-        subject=f'Уведомление о новом отклике',
+        subject=f'Уведомление о выводе средств',
         from_email=settings.DEFAULT_FROM_EMAIL,
-        to=[settings.ADMINS[0][1], ]
+        to=[settings.EMAIL_HOST_USER, ]
     )
     msg.attach_alternative(html_content, "text/html")  # добавляем html
     msg.send()  # отсылаем
-    logger.info(f'Письмо отправлено {settings.ADMINS}')
+    logger.info(f'Письмо отправлено {settings.EMAIL_HOST_USER}')

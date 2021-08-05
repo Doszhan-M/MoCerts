@@ -15,6 +15,13 @@
 {% block content %}
 <main class="main">
     <div class="main__container">
+        <div class="main__middle">
+            <video controls="controls">
+                <source
+                    src="https://video.wixstatic.com/video/1694f8_029fe95547cf466b9e8433baa0fa7eda/1080p/mp4/file.mp4"
+                    type="video/mp4">
+            </video>
+        </div>
         <div class="slider">
             <div class="box_container">
                 <div class="main__left">
@@ -37,16 +44,7 @@
                 <button class="btn btn_right"><i class="fas fa-angle-double-right"></i></button>
             </div>
         </div>
-        <div class="main__middle">
-            <video controls="controls">
-                <source
-                    src="https://video.wixstatic.com/video/1694f8_029fe95547cf466b9e8433baa0fa7eda/1080p/mp4/file.mp4"
-                    type="video/mp4">
-            </video>
-            <span class="main__info">
-                Сайт находится на доработке запустим 1 июня на mocerts.com
-            </span>
-        </div>
+
     </div>
     <div class="main__banner">
         <img src="{% static 'img/banner.webp' %}" alt="Banner">

@@ -224,7 +224,7 @@ li {
 
 .main__container {
     max-width: 1700px;
-    width: 100%;
+    width: 90%;
     padding-left: 20px;
     padding-right: 20px;
     margin: 0 auto;
@@ -525,10 +525,10 @@ li {
     color: #ff4040!important;
 }
 
-.main__middle {
+/* .main__middle {
     margin-left: 15px;
     margin-right: 15px;
-}
+} */
 
 .main__middle * {
     width: 100% !important;
@@ -911,6 +911,23 @@ li {
 
     .payment_id {
         display: none;
+    }
+
+    .main__middle {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+    }
+
+    .main__middle video {
+        box-sizing: content-box;
+        border: 4px solid #942630;
+        margin-top: -46px;
+        margin-bottom: 30px;
+        max-width: 508px!important;
+        width: 100% !important;
+        height: fit-content;
     }
 }
 
