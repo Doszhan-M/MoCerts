@@ -679,9 +679,6 @@ li {
         align-self: center;
         display: flex;
         flex-direction: column;
-        /* justify-content: center;
-        align-items: center; */
-        /* background-color: #32415b; */
     }
 
     .form_separate p{
@@ -812,17 +809,23 @@ li {
 
     .dropdown_mobile {
         display: block!important;
-        z-index: -1;
+        /* z-index: -1; */
 
     }
 
     .active {
         z-index: 1;
-        background-color: #32415b;
     }
 
-
-
+    .dropdown-menu {
+        display: block;
+    }
+    .active .dropdown-item {
+        width: 80px;
+        background-color: #9c2017;
+        z-index: 199;
+        /* text-align: center; */
+    }
 
     .header__reg,
     .dropdown {
