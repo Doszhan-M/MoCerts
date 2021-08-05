@@ -95,12 +95,14 @@
                 <img src="{% static 'img/avatar.webp' %}" alt="Avatar">
             </div>
             {% endif %}
+            {% endif %}
             <div class="logo">
                 <a href="{% url 'main_page' %}"><img src="{% static 'img/logo.webp' %}" alt="Logotype"></a>
             </div>
             <div class="header__mobile--nav">
                 <span></span>
             </div>
+            {% if user.is_authenticated %}
             <a href="{% url 'profile' %}" style="text-decoration: none;">
                 <span class="header__reg">{{ user.first_name }} {{ user.last_name }}</span>
             </a>
