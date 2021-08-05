@@ -817,14 +817,8 @@ li {
         z-index: 1;
     }
 
-    .dropdown-menu {
-        display: block;
-    }
-    .active .dropdown-item {
-        width: 80px;
-        background-color: #9c2017;
+    .active .telegram-share {
         z-index: 199;
-        /* text-align: center; */
     }
 
     .header__reg,
