@@ -879,6 +879,39 @@ li {
         top: unset!important;
     }
 
+    .deposit_title {
+        background: url("../img/links_bg.webp") no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        padding-top: 4px;
+        max-width: 70%;
+        min-height: 42px;
+        font-size: 19px;
+        color: #e29c32;
+        margin-bottom: 5%;
+        margin-top: 5%;
+    }
+
+    
+    .deposit_form {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        margin: 5%;
+    }
+
+    .paymen_history{
+        width: 47%;
+        text-align: center;
+        min-height: 80%;
+        border: 1px solid #2d2e2a;
+        font-size: small;
+    }
+
+    .payment_id {
+        display: none;
+    }
 }
 
 

@@ -68,7 +68,7 @@
             <table class="paymen_history">
                 <tr class="history_title">
                     <td>Дата</td>
-                    <td>Тип транзакции</td>
+                    <td class="payment_id" >Тип транзакции</td>
                     <td>id номер</td>
                     <td>Сумма</td>
                     <td>Статус</td>
@@ -77,7 +77,7 @@
                 <tr class="history_row">
                     <td>{{transaction.time}}</td>
                     <td>{{transaction.type}}</td>
-                    <td>{{transaction.bill_id}}</td>
+                    <td class="payment_id">{{transaction.bill_id}}</td>
                     <td>{{transaction.amount}}</td>
                     <td>{{transaction.get_status_display}}</td>
                 </tr>
