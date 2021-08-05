@@ -758,6 +758,7 @@ li {
         display: flex;
         flex-direction:column;
         justify-content: center;
+        align-items: center;
     }
 
     .documents-wrap .documents-item {
