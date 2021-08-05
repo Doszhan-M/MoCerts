@@ -43,9 +43,10 @@
 </div>
 {% endif %}
 
+<div class="share2_mobil">
 {% if need_pay and need_accept and made_by %}
 <h1 class="h1-certificate">{% trans 'Скопируйте ссылку для отправки или поделитесь в соц сетях' %}</h1>
-<div style="margin: 1% 0% 2% 42%;" class="ya-share2" data-curtain data-shape="round"
+<div class="ya-share2" data-curtain data-shape="round"
     data-services="vkontakte,facebook,odnoklassniki,telegram,twitter,viber,whatsapp,moimir,linkedin">
 </div>
 <div class="container">
@@ -65,6 +66,7 @@
     </div>
 </div>
 {% endif %}
+</div>
 
 {% if need_pay and not need_accept and made_by and not owner_is_here%}
 <h1 class="h1-certificate">{% trans 'Пользователь принял ваш сертификат' %}</h1>

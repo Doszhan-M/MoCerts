@@ -26,38 +26,3 @@
 </script>  base
 
 
-
-<li id="DE">
-  <a href="https://www.facebook.com/sharer/sharer.php?u={{ cert.get_url_for_messengers }}"
-  target="_blank">
-      <div class="facebook-share"></div>
-  </a>
-</li>
-<li id="DEd">
-  <a href="https://vk.com/share.php?url={{ cert.get_url_for_messengers }}&title=Mosert&description=Заработай с нами&image={{ cert.certificate_image.url }}&noparse=true"
-  target="_blank">
-  <div class="vk-share"></div>
-</a>
-</li>
-<li id="DEt">
-  <a href="http://connect.mail.ru/share?share_url={{ cert.get_url_for_messengers }}"
-  target="_blank">
-  <div class="mail-share"></div>
-</a>
-</li>
-
-
-<div style="position: absolute; top: 108%; left:0.5%;">
-    <a href="{% provider_login_url 'google' %}">
-      <img src="{% static 'img/google_mono.png' %}" alt="Пример">
-    </a>
-    <a href="{% provider_login_url 'google' %}">
-      <img src="{% static 'img/facebook_mono.png' %}" alt="Пример">
-    </a>
-    <a href="{% provider_login_url 'google' %}">
-      <img src="{% static 'img/instagram_mono.png' %}" alt="Пример">
-    </a>
-    <a href="{% provider_login_url 'google' %}">
-      <img src="{% static 'img/vk_mono.png' %}" alt="Пример">
-    </a>
-  </div>

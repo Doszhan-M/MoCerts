@@ -85,6 +85,10 @@ li {
     line-height: 20px
 }
 
+.dropdown_mobile {
+    display: none;
+}
+
 .dropdown:active {
     background-color: transparent
 }
@@ -777,6 +781,7 @@ li {
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        margin-bottom: 15%;
     }
 
     .cert_list {
@@ -809,8 +814,6 @@ li {
 
     .dropdown_mobile {
         display: block!important;
-        /* z-index: -1; */
-
     }
 
     .active {
@@ -875,10 +878,7 @@ li {
         right: unset!important;
         top: unset!important;
     }
+
 }
 
-@media only screen and (max-width: 400px) {
-    .footer__social--icons img {
-        width: 30px!important;
-    }
-}
+
